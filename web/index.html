@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- مسار الأساس الصحيح لتجنب الشاشة البيضاء -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="artillery_calc">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>artillery_calc</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- إخفاء وحذف شعار وإعلانات Netlify نهائياً من الواجهة -->
+  <style>
+    [id^="netlify-badge"], a[href*="netlify.com/support"], div:has(> a[href*="netlify.com"]), div:has(> button[aria-label*="Netlify"]), .netlify-deploy-badge {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+      z-index: -999999 !important;
+    }
+  </style>
+  <script>
+    // مراقبة وحذف أي نافذة أو شعار يخص Netlify ديناميكياً فور ظهورها
+    const removeNetlifyElements = () => {
+      document.querySelectorAll('div, a, iframe').forEach(el => {
+        if (
+          (el.href && el.href.includes('netlify.com')) || 
+          (el.innerText && el.innerText.includes('Build your own site with Netlify')) ||
+          (el.id && el.id.startsWith('netlify')) ||
+          (el.className && typeof el.className === 'string' && el.className.includes('netlify'))
+        ) {
+          el.remove();
+        }
+      });
+    };
+    // تشغيل المراقب باستمرار
+    setInterval(removeNetlifyElements, 500);
+  </script>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

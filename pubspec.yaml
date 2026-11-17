@@ -1,0 +1,67 @@
+name: artillery_calc
+description: "Artillery Fire Control System - Offline Calculator"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '^3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  provider: ^6.1.2
+  geolocator: ^13.0.1
+  shared_preferences: ^2.3.2
+  pdf: 3.11.1
+  printing: ^5.13.2
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  intl: ^0.19.0
+  http: ^1.2.2
+  mgrs_dart: ^2.0.0
+  flutter_compass: ^0.8.0
+  sensors_plus: ^6.1.1
+  image_picker: ^1.1.2
+  flutter_ringtone_player: ^4.0.0
+  path_provider: ^2.1.4
+  url_launcher: ^6.3.0
+  flutter_map_mbtiles: 1.0.4
+  google_mlkit_text_recognition: ^0.13.0
+  audioplayers: ^6.1.0
+  record: ^5.2.0
+  fftea: ^1.5.0
+  # الحزمة الجديدة الخاصة بتشغيل الفيديو
+  video_player: ^2.9.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logo.png
+    - assets/icon.png
+    # 👇 مسار مجلد الفيديو 👇
+    - assets/video/
+
+dependency_overrides:
+  pdf: 3.11.1
+  image: 4.1.7
+  archive: 3.6.1
+
+# ==========================================
+# إعدادات الأيقونة (يجب أن تكون في الأسفل تماماً بدون مسافات)
+# ==========================================
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0D1117"
+  adaptive_icon_foreground: "assets/icon.png"
