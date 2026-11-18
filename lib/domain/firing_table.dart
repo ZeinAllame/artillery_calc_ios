@@ -35,7 +35,10 @@ class FiringTableRow {
 }
 
 class FiringTables {
+  // تم تصحيح المفاتيح لتتطابق مع IDs الموجودة في DataService
   static final Map<String, List<FiringTableRow>> _tables = {
+    
+    // هاون 60 ملم
     'mortar60_he_usa': const [
       FiringTableRow(charge: 1, rangeMeters: 400, elevationMils: 1343, timeOfFlightSec: 34.3),
       FiringTableRow(charge: 1, rangeMeters: 500, elevationMils: 1264, timeOfFlightSec: 30.8),
@@ -56,6 +59,8 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 1400, elevationMils: 1101, timeOfFlightSec: 26.6),
       FiringTableRow(charge: 3, rangeMeters: 1700, elevationMils: 795, timeOfFlightSec: 22.3),
     ],
+    
+    // هاون 81 ملم
     'mortar81_he_china': const [
       FiringTableRow(charge: 0, rangeMeters: 300, elevationMils: 1487, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 500, elevationMils: 1377, timeOfFlightSec: 0),
@@ -81,6 +86,8 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 4400, elevationMils: 795, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 5200, elevationMils: 466, timeOfFlightSec: 0),
     ],
+    
+    // هاون 82 ملم
     'mortar82_he_russia': const [
       FiringTableRow(charge: 0, rangeMeters: 300, elevationMils: 1480, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 1000, elevationMils: 1150, timeOfFlightSec: 0),
@@ -91,6 +98,8 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 2000, elevationMils: 1420, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 4000, elevationMils: 710, timeOfFlightSec: 0),
     ],
+    
+    // هاون 120 ملم
     'mortar120_he_usa': const [
       FiringTableRow(charge: 0, rangeMeters: 500, elevationMils: 1371, timeOfFlightSec: 21, heightMeters: 551),
       FiringTableRow(charge: 0, rangeMeters: 900, elevationMils: 1145, timeOfFlightSec: 20, heightMeters: 832),
@@ -112,7 +121,9 @@ class FiringTables {
       FiringTableRow(charge: 8, rangeMeters: 2550, elevationMils: 1130, timeOfFlightSec: 39, heightMeters: 2385),
       FiringTableRow(charge: 8, rangeMeters: 4700, elevationMils: 664, timeOfFlightSec: 60, heightMeters: 6010),
     ],
-    'howitzer122_he_russia': const [
+    
+    // مدفعية 122 ملم D-30
+    'd30_he_russia': const [
       FiringTableRow(charge: 1, rangeMeters: 1500, elevationMils: 1200, timeOfFlightSec: 28),
       FiringTableRow(charge: 1, rangeMeters: 4000, elevationMils: 800, timeOfFlightSec: 50),
       FiringTableRow(charge: 1, rangeMeters: 7000, elevationMils: 400, timeOfFlightSec: 80),
@@ -121,7 +132,33 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 8000, elevationMils: 600, timeOfFlightSec: 70),
       FiringTableRow(charge: 3, rangeMeters: 15300, elevationMils: 150, timeOfFlightSec: 130),
     ],
-    'howitzer155_he_usa': const [
+
+    // مدفعية 122 ملم 2S1
+    '2s1_he_russia': const [
+      FiringTableRow(charge: 1, rangeMeters: 1500, elevationMils: 1200, timeOfFlightSec: 28),
+      FiringTableRow(charge: 1, rangeMeters: 4000, elevationMils: 800, timeOfFlightSec: 50),
+      FiringTableRow(charge: 1, rangeMeters: 7000, elevationMils: 400, timeOfFlightSec: 80),
+      FiringTableRow(charge: 2, rangeMeters: 4000, elevationMils: 900, timeOfFlightSec: 45),
+      FiringTableRow(charge: 2, rangeMeters: 10000, elevationMils: 350, timeOfFlightSec: 90),
+      FiringTableRow(charge: 3, rangeMeters: 8000, elevationMils: 600, timeOfFlightSec: 70),
+      FiringTableRow(charge: 3, rangeMeters: 15300, elevationMils: 150, timeOfFlightSec: 130),
+    ],
+    
+    // مدفعية 155 ملم M109A6
+    'm109a6_he_usa': const [
+      FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 1250, timeOfFlightSec: 25),
+      FiringTableRow(charge: 1, rangeMeters: 4000, elevationMils: 600, timeOfFlightSec: 70),
+      FiringTableRow(charge: 2, rangeMeters: 1000, elevationMils: 1200, timeOfFlightSec: 22),
+      FiringTableRow(charge: 2, rangeMeters: 5000, elevationMils: 550, timeOfFlightSec: 65),
+      FiringTableRow(charge: 5, rangeMeters: 3000, elevationMils: 1050, timeOfFlightSec: 35),
+      FiringTableRow(charge: 5, rangeMeters: 9000, elevationMils: 350, timeOfFlightSec: 85),
+      FiringTableRow(charge: 8, rangeMeters: 9000, elevationMils: 750, timeOfFlightSec: 50),
+      FiringTableRow(charge: 8, rangeMeters: 18000, elevationMils: 150, timeOfFlightSec: 140),
+      FiringTableRow(charge: 8, rangeMeters: 24000, elevationMils: 100, timeOfFlightSec: 160),
+    ],
+
+    // مدفعية 155 ملم M198
+    'm198_he_usa': const [
       FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 1250, timeOfFlightSec: 25),
       FiringTableRow(charge: 1, rangeMeters: 4000, elevationMils: 600, timeOfFlightSec: 70),
       FiringTableRow(charge: 2, rangeMeters: 1000, elevationMils: 1200, timeOfFlightSec: 22),
@@ -134,12 +171,12 @@ class FiringTables {
     ],
   };
 
-  // دالة الحصول على كل الجداول (لشاشة الإدارة)
+  // دالة الحصول على كل الجداول
   static Map<String, List<FiringTableRow>> getAllTables() {
     return _tables;
   }
 
-  // دالة تحديث جدول معين (من شاشة الإدارة)
+  // دالة تحديث جدول معين
   static void updateTable(String tableKey, List<FiringTableRow> rows) {
     _tables[tableKey] = rows;
   }
