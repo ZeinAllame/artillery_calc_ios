@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/theme_provider.dart'; // تأكد من مسار الثيم
+import '../../../theme/theme_provider.dart'; // تأكد من مسار الثيم
 
 class AmmoSelectorScreen extends StatefulWidget {
   const AmmoSelectorScreen({Key? key}) : super(key: key);
