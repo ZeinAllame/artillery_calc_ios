@@ -6,8 +6,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mgrs_dart/mgrs_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+
 import '../../../theme/theme_provider.dart';
 import '../../../models/models.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 import 'target_log_screen.dart';
 
 class TargetCalculatorScreen extends StatefulWidget {
@@ -50,7 +52,24 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
   }
 
   void _reversePosition() {
-    _calculateTarget();
+    final e = double.tryParse(obsE.text) ?? 0;
+    final n = double.tryParse(obsN.text) ?? 0;
+    final dist = double.tryParse(distCtrl.text) ?? 0;
+    final az = double.tryParse(azCtrl.text) ?? 0;
+    
+    if (dist == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('أدخل المسافة والاتجاه أولاً')));
+      return;
+    }
+    final azRad = (az * 2 * pi) / selectedUnit;
+    final dE = dist * sin(azRad);
+    final dN = dist * cos(azRad);
+    setState(() {
+      calculatedDistance = dist;
+      calculatedAzimuth = az;
+      resultE = (e - dE).toStringAsFixed(0);
+      resultN = (n - dN).toStringAsFixed(0);
+    });
   }
 
   Future<void> _sendToCalculator() async {
@@ -65,7 +84,7 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
     await prefs.setString('calc_tgt_e', resultE);
     await prefs.setString('calc_tgt_n', resultN);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('✅ تم إرسال الهدف للحاسبة. انتقل لتبويب الحاسبة'), backgroundColor: Colors.green));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('✅ تم إرسال الهدف للحاسبة'), backgroundColor: Colors.green));
   }
 
   Future<void> _getGpsLocation() async {
@@ -121,13 +140,8 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
               final tgtMgrs = "${obsZone.text}${obsBand.text}${obsSquare.text}$resultE$resultN";
               targets.insert(0, SavedTarget(
                 id: DateTime.now().millisecondsSinceEpoch.toString(),
-                name: nameCtrl.text,
-                targetNumber: numberCtrl.text,
-                targetNature: natureCtrl.text,
-                observerMgrs: obsMgrs,
-                targetMgrs: tgtMgrs,
-                distance: calculatedDistance,
-                azimuth: calculatedAzimuth,
+                name: nameCtrl.text, targetNumber: numberCtrl.text, targetNature: natureCtrl.text,
+                observerMgrs: obsMgrs, targetMgrs: tgtMgrs, distance: calculatedDistance, azimuth: calculatedAzimuth,
                 date: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()),
               ));
               await prefs.setString('saved_targets', json.encode(targets.map((e) => e.toJson()).toList()));
@@ -146,6 +160,13 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
     return Scaffold(
       backgroundColor: colors['bg'],
       appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
         title: const Text('حاسبة الهدف'),
         backgroundColor: colors['surface'],
         actions: [
@@ -153,11 +174,7 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
           DropdownButtonHideUnderline(child: DropdownButton<int>(
             dropdownColor: colors['surface'], value: selectedUnit,
             style: TextStyle(color: colors['primary'], fontWeight: FontWeight.bold),
-            items: const [
-              DropdownMenuItem(value: 6400, child: Text('6400')),
-              DropdownMenuItem(value: 6000, child: Text('6000')),
-              DropdownMenuItem(value: 360, child: Text('360')),
-            ],
+            items: const [DropdownMenuItem(value: 6400, child: Text('6400')), DropdownMenuItem(value: 6000, child: Text('6000')), DropdownMenuItem(value: 360, child: Text('360'))],
             onChanged: (v) { if (v != null) setState(() => selectedUnit = v); },
           )),
           const SizedBox(width: 16),
@@ -174,14 +191,10 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
           const SizedBox(height: 8),
           Row(children: [
             Expanded(child: TextField(controller: obsZone, decoration: const InputDecoration(labelText: 'Zone'), keyboardType: TextInputType.number)),
-            const SizedBox(width: 5),
-            Expanded(child: TextField(controller: obsBand, decoration: const InputDecoration(labelText: 'Band'))),
-            const SizedBox(width: 5),
-            Expanded(child: TextField(controller: obsSquare, decoration: const InputDecoration(labelText: 'Sq'))),
-            const SizedBox(width: 5),
-            Expanded(flex: 2, child: TextField(controller: obsE, decoration: const InputDecoration(labelText: 'E'), keyboardType: TextInputType.number)),
-            const SizedBox(width: 5),
-            Expanded(flex: 2, child: TextField(controller: obsN, decoration: const InputDecoration(labelText: 'N'), keyboardType: TextInputType.number)),
+            const SizedBox(width: 5), Expanded(child: TextField(controller: obsBand, decoration: const InputDecoration(labelText: 'Band'))),
+            const SizedBox(width: 5), Expanded(child: TextField(controller: obsSquare, decoration: const InputDecoration(labelText: 'Sq'))),
+            const SizedBox(width: 5), Expanded(flex: 2, child: TextField(controller: obsE, decoration: const InputDecoration(labelText: 'E'), keyboardType: TextInputType.number)),
+            const SizedBox(width: 5), Expanded(flex: 2, child: TextField(controller: obsN, decoration: const InputDecoration(labelText: 'N'), keyboardType: TextInputType.number)),
           ]),
           const SizedBox(height: 15),
           TextField(controller: distCtrl, decoration: const InputDecoration(labelText: 'المسافة (م)'), keyboardType: TextInputType.number),
@@ -191,8 +204,7 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
           ElevatedButton(onPressed: _calculateTarget, style: ElevatedButton.styleFrom(backgroundColor: colors['primary'], foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 16)),
               child: const Text('حساب إحداثيات الهدف (Forward)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
           const SizedBox(height: 8),
-          ElevatedButton.icon(onPressed: _reversePosition,
-              icon: const Icon(Icons.gps_off), label: const Text('حساب الموقع العكسي (Reverse)'),
+          ElevatedButton.icon(onPressed: _reversePosition, icon: const Icon(Icons.gps_off), label: const Text('حساب الموقع العكسي (Reverse)'),
               style: ElevatedButton.styleFrom(backgroundColor: colors['surfaceLight'], foregroundColor: colors['text'], padding: const EdgeInsets.symmetric(vertical: 14))),
           const SizedBox(height: 24),
           Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: colors['surfaceLight'], borderRadius: BorderRadius.circular(12), border: Border.all(color: colors['primary']!)),
@@ -203,13 +215,9 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
                 Text('N: $resultN', style: TextStyle(color: colors['text'], fontSize: 24, fontWeight: FontWeight.bold)),
               ])),
           const SizedBox(height: 20),
-          if (resultE != "---")
-            ElevatedButton.icon(onPressed: _saveTargetDialog, icon: const Icon(Icons.save),
-                label: const Text('حفظ معلومات الهدف'), style: ElevatedButton.styleFrom(backgroundColor: colors['secondary'], foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14))),
+          if (resultE != "---") ElevatedButton.icon(onPressed: _saveTargetDialog, icon: const Icon(Icons.save), label: const Text('حفظ معلومات الهدف'), style: ElevatedButton.styleFrom(backgroundColor: colors['secondary'], foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14))),
           const SizedBox(height: 8),
-          if (resultE != "---")
-            ElevatedButton.icon(onPressed: _sendToCalculator, icon: const Icon(Icons.send),
-                label: const Text('إرسال للحاسبة الرئيسية'), style: ElevatedButton.styleFrom(backgroundColor: colors['primary'], foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 14))),
+          if (resultE != "---") ElevatedButton.icon(onPressed: _sendToCalculator, icon: const Icon(Icons.send), label: const Text('إرسال للحاسبة الرئيسية'), style: ElevatedButton.styleFrom(backgroundColor: colors['primary'], foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 14))),
         ],
       ),
     );

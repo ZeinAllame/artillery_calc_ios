@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
 import '../../../theme/theme_provider.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 
 class _Mission {
   String id;
@@ -125,7 +127,17 @@ class _FiringTimerScreenState extends State<FiringTimerScreen> {
 
     return Scaffold(
       backgroundColor: colors['bg'],
-      appBar: AppBar(title: const Text('غرفة العمليات - المواعيد'), backgroundColor: colors['surface']),
+      appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
+        title: const Text('غرفة العمليات - المواعيد'), 
+        backgroundColor: colors['surface'],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addMission,
         backgroundColor: colors['primary'],

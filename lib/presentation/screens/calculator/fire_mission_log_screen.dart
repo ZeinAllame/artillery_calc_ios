@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../theme/theme_provider.dart';
 import '../../../models/models.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 
 class FireMissionLogScreen extends StatefulWidget {
   const FireMissionLogScreen({Key? key}) : super(key: key);
@@ -50,6 +52,13 @@ class _FireMissionLogScreenState extends State<FireMissionLogScreen> {
     return Scaffold(
       backgroundColor: colors['bg'],
       appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
         title: const Text('سجل الرمايات (Fire Missions)'), 
         backgroundColor: colors['surface'],
       ),

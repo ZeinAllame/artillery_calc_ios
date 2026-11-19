@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../theme/theme_provider.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 
 class ManualsScreen extends StatefulWidget {
   const ManualsScreen({Key? key}) : super(key: key);
+  
   @override
   State<ManualsScreen> createState() => _ManualsScreenState();
 }
@@ -20,9 +23,20 @@ class _ManualsScreenState extends State<ManualsScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
+    
     return Scaffold(
       backgroundColor: colors['bg'],
-      appBar: AppBar(title: const Text('الكراسات وأدوات المدفعية'), backgroundColor: colors['surface']),
+      appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
+        title: const Text('الكراسات وأدوات المدفعية'), 
+        backgroundColor: colors['surface'],
+      ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: manuals.length,

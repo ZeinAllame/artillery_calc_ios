@@ -13,7 +13,6 @@ class Ballistics {
   // حساب تصحيح الاتجاه (بسبب الرياح)
   static double calculateWindCorrection(
       double distance, double timeOfFlight, double windSpeed, double windDirection, double firingAzimuth, int milsFullCircle) {
-    // زاوية الرياح بالنسبة لاتجاه الرمي
     double crosswindAngle = (windDirection - firingAzimuth) * pi / 180.0;
     double crosswind = windSpeed * sin(crosswindAngle);
     double lateralDrift = crosswind * timeOfFlight;
@@ -23,5 +22,17 @@ class Ballistics {
 
   static double milsToDegrees(double mils, int milsFullCircle) {
     return mils * 360.0 / milsFullCircle;
+  }
+
+  // ★ جديد: زاوية الموقع (Site Angle) بالملات — موجبة إذا الهدف أعلى
+  static double siteAngleMils(double deltaHeightMeters, double horizontalRangeMeters, int milsFullCircle) {
+    if (horizontalRangeMeters <= 0) return 0;
+    final double rad = atan(deltaHeightMeters / horizontalRangeMeters);
+    return rad * (milsFullCircle / (2 * pi));
+  }
+
+  // ★ جديد: المسافة المائلة
+  static double slantRangeMeters(double horizontalRangeMeters, double deltaHeightMeters) {
+    return sqrt(horizontalRangeMeters * horizontalRangeMeters + deltaHeightMeters * deltaHeightMeters);
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
 import '../../../theme/theme_provider.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 
 class AmmoTrackerScreen extends StatefulWidget {
   const AmmoTrackerScreen({Key? key}) : super(key: key);
@@ -95,6 +97,13 @@ class _AmmoTrackerScreenState extends State<AmmoTrackerScreen> {
     return Scaffold(
       backgroundColor: colors['bg'],
       appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
         title: const Text('مخزون الذخيرة (Ammo)'), 
         backgroundColor: colors['surface'],
         iconTheme: IconThemeData(color: colors['text'] ?? Colors.white),

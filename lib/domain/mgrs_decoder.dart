@@ -53,11 +53,15 @@ class MgrsDecoder {
     return UtmCoord(easting, northing, zone, band, square);
   }
 
-  static Map<String, double> calculateGrid(double dE, double dN) {
+  // التعديل هنا: إضافة milsFullCircle كمتغير
+  static Map<String, double> calculateGrid(double dE, double dN, int milsFullCircle) {
     final distance = sqrt(dE * dE + dN * dN);
     double azimuthRad = atan2(dE, dN);
     if (azimuthRad < 0) azimuthRad += 2 * pi;
-    final azimuthMils = azimuthRad * (6400.0 / (2 * pi));
-    return {'distance': distance, 'azimuth': azimuthMils};
+    
+    // الحساب بناءً على وحدة الزاوية المختارة
+    final azimuth = azimuthRad * (milsFullCircle / (2 * pi));
+    
+    return {'distance': distance, 'azimuth': azimuth};
   }
 }

@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:mgrs_dart/mgrs_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
 import '../../../theme/theme_provider.dart';
 import '../../../theme/settings_provider.dart';
 import '../../../theme/app_theme.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -22,7 +24,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    // تحميل قيمة الانحراف المغناطيسي الحالية عند فتح الشاشة
     final sp = Provider.of<SettingsProvider>(context, listen: false);
     gmCtrl.text = sp.gMAngle.toStringAsFixed(2);
   }
@@ -33,7 +34,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
-  // حفظ زاوية الانحراف يدوياً
   Future<void> _saveGm() async {
     final v = double.tryParse(gmCtrl.text) ?? 0.0;
     await Provider.of<SettingsProvider>(context, listen: false).setGMAngle(v);
@@ -44,7 +44,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  // جلب زاوية الانحراف تلقائياً عبر GPS و API
   Future<void> _autoFetch() async {
     setState(() => fetching = true);
     try {
@@ -59,7 +58,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final lat = pt[1].toStringAsFixed(4);
       final lon = pt[0].toStringAsFixed(4);
 
-      // استخدام خادم BGS (British Geological Survey)
       final url = Uri.parse(
           'https://geomag.bgs.ac.uk/web_service/GMM/calculate?latitude=$lat&longitude=$lon&height=0&date=2025-01-01&resultFormat=json');
       
@@ -109,11 +107,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       backgroundColor: colors['bg'],
-      appBar: AppBar(title: const Text('الإعدادات'), backgroundColor: colors['surface']),
+      appBar: AppBar(
+        // ← إصلاح الشريط الجانبي هنا
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu, color: colors['text']),
+            onPressed: () => rootScaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
+        title: const Text('الإعدادات'), 
+        backgroundColor: colors['surface'],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // ============== قسم المظهر ==============
           Text('المظهر (Theme)', style: TextStyle(color: colors['primary'], fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Container(
@@ -137,19 +144,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
-          
           const SizedBox(height: 30),
-
-          // ============== قسم وحدات القياس ==============
           Text('وحدات القياس (تطبق على كل البرنامج)', style: TextStyle(color: colors['primary'], fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           _unitRow('وحدة الاتجاه', sp.directionUnit, (v) => sp.setDirectionUnit(v), colors),
           const SizedBox(height: 8),
           _unitRow('وحدة الارتفاع', sp.elevationUnit, (v) => sp.setElevationUnit(v), colors),
-
           const SizedBox(height: 30),
-
-          // ============== قسم الانحراف المغناطيسي ==============
           Text('زاوية الانحراف المغناطيسي (G-M Angle)', style: TextStyle(color: colors['primary'], fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           TextField(
@@ -174,10 +175,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               minimumSize: const Size(double.infinity, 48),
             ),
           ),
-          
           const SizedBox(height: 30),
-
-          // ============== معلومات إضافية ==============
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(8)),
@@ -198,7 +196,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  // مكون مساعد لعرض الوحدات (اتجاه / ارتفاع)
   Widget _unitRow(String label, int val, Function(int) onChanged, Map<String, Color> colors) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

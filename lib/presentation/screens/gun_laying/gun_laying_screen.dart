@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // جديد
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../theme/theme_provider.dart';
 
 class GunLayingScreen extends StatefulWidget {
@@ -32,11 +33,14 @@ class _GunLayingScreenState extends State<GunLayingScreen> {
     
     _compassSub = FlutterCompass.events?.listen((event) {
       if (event.heading != null && mounted) {
+        final newInterference = event.accuracy != null && event.accuracy! < 3;
+        if (newInterference && !_hasInterference) {
+          HapticFeedback.heavyImpact(); // اهتزاز قوي لتنبيه الضابط
+        }
         setState(() {
           _magneticHeading = (event.heading! + 360) % 360;
-          // الاتجاه الشبكي = الاتجاه المغناطيسي + زاوية الانحراف
           _gridHeading = (_magneticHeading! + _gmAngle + 360) % 360;
-          _hasInterference = event.accuracy != null && event.accuracy! < 3;
+          _hasInterference = newInterference;
         });
       }
     });
@@ -50,9 +54,7 @@ class _GunLayingScreenState extends State<GunLayingScreen> {
 
   Future<void> _loadGmAngle() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _gmAngle = prefs.getDouble('g_m_angle') ?? 0.0;
-    });
+    setState(() { _gmAngle = prefs.getDouble('g_m_angle') ?? 0.0; });
   }
 
   @override
@@ -87,9 +89,7 @@ class _GunLayingScreenState extends State<GunLayingScreen> {
                 DropdownMenuItem(value: 6000, child: Text('ملات 6000')),
                 DropdownMenuItem(value: 360, child: Text('درجات 360')),
               ],
-              onChanged: (val) {
-                if (val != null) setState(() => selectedUnit = val);
-              },
+              onChanged: (val) { if (val != null) setState(() => selectedUnit = val); },
             ),
           ),
           const SizedBox(width: 16),
@@ -118,14 +118,14 @@ class _GunLayingScreenState extends State<GunLayingScreen> {
                   children: [
                     Icon(Icons.height, color: colors['warning'], size: 40),
                     Text("زاوية السبطانة", style: TextStyle(color: colors['text'], fontSize: 14)),
-                    Text(_formatAngle(_pitch), style: TextStyle(color: colors['warning'], fontSize: 28, fontWeight: FontWeight.bold)),
+                    Text(_formatAngle(_pitch), style: TextStyle(color: colors['warning'], fontSize: 28, fontWeight: FontWeight.w900)),
                   ],
                 ),
                 Column(
                   children: [
                     Icon(Icons.explore, color: colors['primary'], size: 40),
                     Text("الاتجاه الشبكي (Grid)", style: TextStyle(color: colors['text'], fontSize: 14)),
-                    Text(_formatAngle(_gridHeading), style: TextStyle(color: colors['primary'], fontSize: 28, fontWeight: FontWeight.bold)),
+                    Text(_formatAngle(_gridHeading), style: TextStyle(color: colors['primary'], fontSize: 28, fontWeight: FontWeight.w900)),
                   ],
                 ),
               ],
@@ -140,13 +140,13 @@ class _GunLayingScreenState extends State<GunLayingScreen> {
                   alignment: Alignment.center,
                   children: [
                     Transform.rotate(
-                      angle: -_gridHeading * math.pi / 180, // نستخدم الاتجاه الشبكي
+                      angle: -_gridHeading * math.pi / 180,
                       child: CustomPaint(
                         size: const Size(320, 320),
                         painter: NumberedCompassPainter(colors: colors, milsFullCircle: selectedUnit),
                       ),
                     ),
-                    Icon(Icons.arrow_drop_up, color: colors['danger'], size: 50),
+                    Icon(Icons.arrow_drop_up, color: colors['danger'] ?? Colors.red, size: 50),
                   ],
                 ),
               ),
@@ -198,4 +198,4 @@ class NumberedCompassPainter extends CustomPainter {
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-} 
+}
