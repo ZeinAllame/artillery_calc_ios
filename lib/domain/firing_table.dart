@@ -38,11 +38,9 @@ class FiringTables {
   static final Map<String, List<FiringTableRow>> _tables = {
     
     // ============================================================
-    // 1. هاون 60 ملم إيراني - HE (مهداد) - صمام AZ111-A2
-    // الظروف: ارتفاع 900م، حرارة 9.3°C، ضغط 682mmHg
+    // 1. هاون 60 ملم إيراني - HE (مهداد)
     // ============================================================
     'mortar60_he_iran': const [
-      // الحشوة 0 (V=88.5 m/s)
       FiringTableRow(charge: 0, rangeMeters: 0, elevationMils: 19, timeOfFlightSec: 0.0, heightMeters: 0),
       FiringTableRow(charge: 0, rangeMeters: 100, elevationMils: 19, timeOfFlightSec: 0.3, heightMeters: 1),
       FiringTableRow(charge: 0, rangeMeters: 200, elevationMils: 19, timeOfFlightSec: 0.6, heightMeters: 2),
@@ -52,7 +50,6 @@ class FiringTables {
       FiringTableRow(charge: 0, rangeMeters: 600, elevationMils: 19, timeOfFlightSec: 2.0, heightMeters: 6),
       FiringTableRow(charge: 0, rangeMeters: 700, elevationMils: 18, timeOfFlightSec: 2.3, heightMeters: 7),
       FiringTableRow(charge: 0, rangeMeters: 730, elevationMils: 18, timeOfFlightSec: 2.4, heightMeters: 7),
-      // الحشوة 1 (V=127 m/s, 1 WHITE)
       FiringTableRow(charge: 1, rangeMeters: 500, elevationMils: 22, timeOfFlightSec: 1.6, heightMeters: 6),
       FiringTableRow(charge: 1, rangeMeters: 600, elevationMils: 22, timeOfFlightSec: 2.0, heightMeters: 7),
       FiringTableRow(charge: 1, rangeMeters: 700, elevationMils: 22, timeOfFlightSec: 2.3, heightMeters: 8),
@@ -61,7 +58,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 20, timeOfFlightSec: 3.3, heightMeters: 11),
       FiringTableRow(charge: 1, rangeMeters: 1100, elevationMils: 19, timeOfFlightSec: 3.6, heightMeters: 12),
       FiringTableRow(charge: 1, rangeMeters: 1180, elevationMils: 16, timeOfFlightSec: 3.8, heightMeters: 13),
-      // الحشوة 2 (V=158 m/s, 2 WHITE)
       FiringTableRow(charge: 2, rangeMeters: 800, elevationMils: 28, timeOfFlightSec: 2.2, heightMeters: 10),
       FiringTableRow(charge: 2, rangeMeters: 1000, elevationMils: 28, timeOfFlightSec: 2.8, heightMeters: 12),
       FiringTableRow(charge: 2, rangeMeters: 1200, elevationMils: 28, timeOfFlightSec: 3.3, heightMeters: 15),
@@ -69,7 +65,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 1600, elevationMils: 26, timeOfFlightSec: 4.3, heightMeters: 21),
       FiringTableRow(charge: 2, rangeMeters: 1800, elevationMils: 25, timeOfFlightSec: 4.8, heightMeters: 24),
       FiringTableRow(charge: 2, rangeMeters: 1850, elevationMils: 21, timeOfFlightSec: 5.0, heightMeters: 25),
-      // الحشوة 3 (V=183 m/s, 3 WHITE)
       FiringTableRow(charge: 3, rangeMeters: 1200, elevationMils: 32, timeOfFlightSec: 2.8, heightMeters: 18),
       FiringTableRow(charge: 3, rangeMeters: 1500, elevationMils: 31, timeOfFlightSec: 3.4, heightMeters: 22),
       FiringTableRow(charge: 3, rangeMeters: 1800, elevationMils: 30, timeOfFlightSec: 4.0, heightMeters: 27),
@@ -78,10 +73,9 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 2. هاون 81 ملم - HE (مهداد) - بالملات (6400)
+    // 2. هاون 81 ملم - HE (مهداد)
     // ============================================================
     'mortar81_he_china': const [
-      // الحشوة 0
       FiringTableRow(charge: 0, rangeMeters: 100, elevationMils: 342, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 200, elevationMils: 442, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 300, elevationMils: 550, timeOfFlightSec: 0),
@@ -91,7 +85,6 @@ class FiringTables {
       FiringTableRow(charge: 0, rangeMeters: 700, elevationMils: 1300, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 800, elevationMils: 1500, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 900, elevationMils: 1700, timeOfFlightSec: 0),
-      // الحشوة 1
       FiringTableRow(charge: 1, rangeMeters: 300, elevationMils: 358, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 500, elevationMils: 433, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 700, elevationMils: 521, timeOfFlightSec: 0),
@@ -103,7 +96,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 1900, elevationMils: 1242, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 2100, elevationMils: 1388, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 2200, elevationMils: 1461, timeOfFlightSec: 0),
-      // الحشوة 2
       FiringTableRow(charge: 2, rangeMeters: 500, elevationMils: 433, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 700, elevationMils: 496, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 900, elevationMils: 546, timeOfFlightSec: 0),
@@ -118,7 +110,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 2700, elevationMils: 1217, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 2900, elevationMils: 1317, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 3000, elevationMils: 1375, timeOfFlightSec: 0),
-      // الحشوة 3
       FiringTableRow(charge: 3, rangeMeters: 1000, elevationMils: 488, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 1300, elevationMils: 554, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 1600, elevationMils: 613, timeOfFlightSec: 0),
@@ -130,7 +121,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 3400, elevationMils: 1158, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 3700, elevationMils: 1288, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 4000, elevationMils: 1437, timeOfFlightSec: 0),
-      // الحشوة 4
       FiringTableRow(charge: 4, rangeMeters: 1800, elevationMils: 546, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 2100, elevationMils: 600, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 2400, elevationMils: 662, timeOfFlightSec: 0),
@@ -142,7 +132,6 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 4200, elevationMils: 1125, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 4500, elevationMils: 1225, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 4800, elevationMils: 1342, timeOfFlightSec: 0),
-      // الحشوة 5
       FiringTableRow(charge: 5, rangeMeters: 2400, elevationMils: 546, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 2700, elevationMils: 575, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 3000, elevationMils: 621, timeOfFlightSec: 0),
@@ -153,7 +142,6 @@ class FiringTables {
       FiringTableRow(charge: 5, rangeMeters: 4500, elevationMils: 900, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 4800, elevationMils: 975, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 4900, elevationMils: 1000, timeOfFlightSec: 0),
-      // الحشوة 6
       FiringTableRow(charge: 6, rangeMeters: 3100, elevationMils: 596, timeOfFlightSec: 0),
       FiringTableRow(charge: 6, rangeMeters: 3400, elevationMils: 645, timeOfFlightSec: 0),
       FiringTableRow(charge: 6, rangeMeters: 3700, elevationMils: 688, timeOfFlightSec: 0),
@@ -165,41 +153,35 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 3. هاون 120 ملم M74 - Smoke M64 P1 (أمريكي)
+    // 3. هاون 120 ملم M74 - Smoke M64 P1
     // ============================================================
     'mortar120_smoke_usa': const [
-      // الحشوة 1
       FiringTableRow(charge: 1, rangeMeters: 766, elevationMils: 1417, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 1161, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1300, elevationMils: 1016, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1500, elevationMils: 845, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1529, elevationMils: 750, timeOfFlightSec: 0),
-      // الحشوة 2
       FiringTableRow(charge: 2, rangeMeters: 500, elevationMils: 1410, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 1000, elevationMils: 1316, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 1500, elevationMils: 1212, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 2000, elevationMils: 1059, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 2500, elevationMils: 901, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 2647, elevationMils: 750, timeOfFlightSec: 0),
-      // الحشوة 3
       FiringTableRow(charge: 3, rangeMeters: 700, elevationMils: 1413, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 1500, elevationMils: 1295, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 2500, elevationMils: 1159, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 3500, elevationMils: 898, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 3790, elevationMils: 750, timeOfFlightSec: 0),
-      // الحشوة 4
       FiringTableRow(charge: 4, rangeMeters: 900, elevationMils: 1413, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 2000, elevationMils: 1300, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 3000, elevationMils: 1170, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 4000, elevationMils: 1015, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 4825, elevationMils: 750, timeOfFlightSec: 0),
-      // الحشوة 5
       FiringTableRow(charge: 5, rangeMeters: 1100, elevationMils: 1411, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 2500, elevationMils: 1271, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 4000, elevationMils: 1097, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 5000, elevationMils: 953, timeOfFlightSec: 0),
       FiringTableRow(charge: 5, rangeMeters: 5760, elevationMils: 750, timeOfFlightSec: 0),
-      // الحشوة 6
       FiringTableRow(charge: 6, rangeMeters: 1200, elevationMils: 1414, timeOfFlightSec: 0),
       FiringTableRow(charge: 6, rangeMeters: 3000, elevationMils: 1232, timeOfFlightSec: 0),
       FiringTableRow(charge: 6, rangeMeters: 5000, elevationMils: 1080, timeOfFlightSec: 0),
@@ -208,10 +190,9 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 4. هاون 120 ملم أمريكي - HE LOT 72 (موجود مسبقاً - كامل)
+    // 4. هاون 120 ملم أمريكي - HE LOT 72
     // ============================================================
     'mortar120_he_usa': const [
-      // الحشوة 0
       FiringTableRow(charge: 0, rangeMeters: 500, elevationMils: 1371, timeOfFlightSec: 21, heightMeters: 561),
       FiringTableRow(charge: 0, rangeMeters: 525, elevationMils: 1359, timeOfFlightSec: 21, heightMeters: 558),
       FiringTableRow(charge: 0, rangeMeters: 550, elevationMils: 1346, timeOfFlightSec: 21, heightMeters: 555),
@@ -240,7 +221,6 @@ class FiringTables {
       FiringTableRow(charge: 0, rangeMeters: 1125, elevationMils: 931, timeOfFlightSec: 17, heightMeters: 371),
       FiringTableRow(charge: 0, rangeMeters: 1150, elevationMils: 872, timeOfFlightSec: 16, heightMeters: 313),
       FiringTableRow(charge: 0, rangeMeters: 1155, elevationMils: 800, timeOfFlightSec: 16, heightMeters: 298),
-      // الحشوة 1
       FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 1301, timeOfFlightSec: 26, heightMeters: 859),
       FiringTableRow(charge: 1, rangeMeters: 1050, elevationMils: 1283, timeOfFlightSec: 26, heightMeters: 850),
       FiringTableRow(charge: 1, rangeMeters: 1100, elevationMils: 1266, timeOfFlightSec: 26, heightMeters: 840),
@@ -259,7 +239,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 1750, elevationMils: 922, timeOfFlightSec: 22, heightMeters: 584),
       FiringTableRow(charge: 1, rangeMeters: 1800, elevationMils: 843, timeOfFlightSec: 20, heightMeters: 513),
       FiringTableRow(charge: 1, rangeMeters: 1810, elevationMils: 800, timeOfFlightSec: 20, heightMeters: 473),
-      // الحشوة 2
       FiringTableRow(charge: 2, rangeMeters: 1500, elevationMils: 1274, timeOfFlightSec: 31, heightMeters: 1202),
       FiringTableRow(charge: 2, rangeMeters: 1550, elevationMils: 1261, timeOfFlightSec: 31, heightMeters: 1191),
       FiringTableRow(charge: 2, rangeMeters: 1600, elevationMils: 1248, timeOfFlightSec: 31, heightMeters: 1181),
@@ -282,7 +261,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 2450, elevationMils: 912, timeOfFlightSec: 26, heightMeters: 819),
       FiringTableRow(charge: 2, rangeMeters: 2500, elevationMils: 858, timeOfFlightSec: 25, heightMeters: 750),
       FiringTableRow(charge: 2, rangeMeters: 2525, elevationMils: 800, timeOfFlightSec: 23, heightMeters: 676),
-      // الحشوة 3
       FiringTableRow(charge: 3, rangeMeters: 2200, elevationMils: 1203, timeOfFlightSec: 34, heightMeters: 1452),
       FiringTableRow(charge: 3, rangeMeters: 2250, elevationMils: 1191, timeOfFlightSec: 34, heightMeters: 1438),
       FiringTableRow(charge: 3, rangeMeters: 2300, elevationMils: 1179, timeOfFlightSec: 34, heightMeters: 1424),
@@ -303,7 +281,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 3050, elevationMils: 916, timeOfFlightSec: 29, heightMeters: 1050),
       FiringTableRow(charge: 3, rangeMeters: 3100, elevationMils: 878, timeOfFlightSec: 28, heightMeters: 989),
       FiringTableRow(charge: 3, rangeMeters: 3150, elevationMils: 800, timeOfFlightSec: 27, heightMeters: 863),
-      // الحشوة 4
       FiringTableRow(charge: 4, rangeMeters: 2900, elevationMils: 1166, timeOfFlightSec: 38, heightMeters: 1754),
       FiringTableRow(charge: 4, rangeMeters: 2950, elevationMils: 1156, timeOfFlightSec: 38, heightMeters: 1738),
       FiringTableRow(charge: 4, rangeMeters: 3000, elevationMils: 1145, timeOfFlightSec: 37, heightMeters: 1722),
@@ -325,7 +302,6 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 3800, elevationMils: 892, timeOfFlightSec: 32, heightMeters: 1261),
       FiringTableRow(charge: 4, rangeMeters: 3850, elevationMils: 853, timeOfFlightSec: 31, heightMeters: 1184),
       FiringTableRow(charge: 4, rangeMeters: 3885, elevationMils: 800, timeOfFlightSec: 30, heightMeters: 1080),
-      // الحشوة 5
       FiringTableRow(charge: 5, rangeMeters: 3600, elevationMils: 1143, timeOfFlightSec: 41, heightMeters: 2076),
       FiringTableRow(charge: 5, rangeMeters: 3650, elevationMils: 1134, timeOfFlightSec: 41, heightMeters: 2058),
       FiringTableRow(charge: 5, rangeMeters: 3700, elevationMils: 1124, timeOfFlightSec: 41, heightMeters: 2040),
@@ -348,7 +324,6 @@ class FiringTables {
       FiringTableRow(charge: 5, rangeMeters: 4550, elevationMils: 885, timeOfFlightSec: 35, heightMeters: 1508),
       FiringTableRow(charge: 5, rangeMeters: 4600, elevationMils: 851, timeOfFlightSec: 34, heightMeters: 1427),
       FiringTableRow(charge: 5, rangeMeters: 4640, elevationMils: 800, timeOfFlightSec: 33, heightMeters: 1307),
-      // الحشوة 6
       FiringTableRow(charge: 6, rangeMeters: 4300, elevationMils: 1104, timeOfFlightSec: 43, heightMeters: 2282),
       FiringTableRow(charge: 6, rangeMeters: 4350, elevationMils: 1095, timeOfFlightSec: 43, heightMeters: 2261),
       FiringTableRow(charge: 6, rangeMeters: 4400, elevationMils: 1085, timeOfFlightSec: 43, heightMeters: 2239),
@@ -369,7 +344,6 @@ class FiringTables {
       FiringTableRow(charge: 6, rangeMeters: 5150, elevationMils: 878, timeOfFlightSec: 37, heightMeters: 1704),
       FiringTableRow(charge: 6, rangeMeters: 5200, elevationMils: 846, timeOfFlightSec: 36, heightMeters: 1617),
       FiringTableRow(charge: 6, rangeMeters: 5240, elevationMils: 800, timeOfFlightSec: 35, heightMeters: 1488),
-      // الحشوة 7
       FiringTableRow(charge: 7, rangeMeters: 5000, elevationMils: 1081, timeOfFlightSec: 45, heightMeters: 2534),
       FiringTableRow(charge: 7, rangeMeters: 5050, elevationMils: 1073, timeOfFlightSec: 45, heightMeters: 2511),
       FiringTableRow(charge: 7, rangeMeters: 5100, elevationMils: 1064, timeOfFlightSec: 45, heightMeters: 2487),
@@ -390,7 +364,6 @@ class FiringTables {
       FiringTableRow(charge: 7, rangeMeters: 5850, elevationMils: 862, timeOfFlightSec: 39, heightMeters: 1886),
       FiringTableRow(charge: 7, rangeMeters: 5900, elevationMils: 826, timeOfFlightSec: 38, heightMeters: 1772),
       FiringTableRow(charge: 7, rangeMeters: 5920, elevationMils: 800, timeOfFlightSec: 37, heightMeters: 1691),
-      // الحشوة 8
       FiringTableRow(charge: 8, rangeMeters: 5500, elevationMils: 1088, timeOfFlightSec: 48, heightMeters: 2851),
       FiringTableRow(charge: 8, rangeMeters: 5550, elevationMils: 1080, timeOfFlightSec: 48, heightMeters: 2829),
       FiringTableRow(charge: 8, rangeMeters: 5600, elevationMils: 1073, timeOfFlightSec: 48, heightMeters: 2805),
@@ -417,7 +390,7 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 5. هاون 120 ملم أمريكي - Illumination (موجود مسبقاً)
+    // 5. هاون 120 ملم أمريكي - Illumination
     // ============================================================
     'mortar120_illum_usa': const [
       FiringTableRow(charge: 1, rangeMeters: 400, elevationMils: 343, timeOfFlightSec: 8.4),
@@ -578,10 +551,9 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 6. هاون 120 ملم إيراني - HE (مهداد) - 9 حشوات
+    // 6. هاون 120 ملم إيراني - HE (مهداد)
     // ============================================================
     'mortar120_he_iran': const [
-      // الحشوة 0 (حمراء 1 + بيضاء 0)
       FiringTableRow(charge: 0, rangeMeters: 450, elevationMils: 1317, timeOfFlightSec: 22, heightMeters: 22),
       FiringTableRow(charge: 0, rangeMeters: 500, elevationMils: 1300, timeOfFlightSec: 22, heightMeters: 22),
       FiringTableRow(charge: 0, rangeMeters: 550, elevationMils: 1283, timeOfFlightSec: 22, heightMeters: 22),
@@ -599,7 +571,6 @@ class FiringTables {
       FiringTableRow(charge: 0, rangeMeters: 1150, elevationMils: 1027, timeOfFlightSec: 19, heightMeters: 19),
       FiringTableRow(charge: 0, rangeMeters: 1200, elevationMils: 997, timeOfFlightSec: 19, heightMeters: 19),
       FiringTableRow(charge: 0, rangeMeters: 1249, elevationMils: 750, timeOfFlightSec: 16, heightMeters: 16),
-      // الحشوة 1 (حمراء 1 + بيضاء 1)
       FiringTableRow(charge: 1, rangeMeters: 700, elevationMils: 1317, timeOfFlightSec: 28, heightMeters: 28),
       FiringTableRow(charge: 1, rangeMeters: 800, elevationMils: 1283, timeOfFlightSec: 28, heightMeters: 28),
       FiringTableRow(charge: 1, rangeMeters: 900, elevationMils: 1249, timeOfFlightSec: 27, heightMeters: 27),
@@ -613,7 +584,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 1700, elevationMils: 893, timeOfFlightSec: 20, heightMeters: 20),
       FiringTableRow(charge: 1, rangeMeters: 1800, elevationMils: 831, timeOfFlightSec: 19, heightMeters: 19),
       FiringTableRow(charge: 1, rangeMeters: 1900, elevationMils: 750, timeOfFlightSec: 19, heightMeters: 19),
-      // الحشوة 2 (حمراء 1 + بيضاء 2)
       FiringTableRow(charge: 2, rangeMeters: 1200, elevationMils: 1283, timeOfFlightSec: 33, heightMeters: 33),
       FiringTableRow(charge: 2, rangeMeters: 1400, elevationMils: 1249, timeOfFlightSec: 33, heightMeters: 33),
       FiringTableRow(charge: 2, rangeMeters: 1600, elevationMils: 1215, timeOfFlightSec: 32, heightMeters: 32),
@@ -622,17 +592,15 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 2200, elevationMils: 955, timeOfFlightSec: 24, heightMeters: 24),
       FiringTableRow(charge: 2, rangeMeters: 2400, elevationMils: 883, timeOfFlightSec: 22, heightMeters: 22),
       FiringTableRow(charge: 2, rangeMeters: 2650, elevationMils: 750, timeOfFlightSec: 20, heightMeters: 20),
-      // الحشوة 3 (حمراء 1 + بيضاء 3)
       FiringTableRow(charge: 3, rangeMeters: 2000, elevationMils: 1244, timeOfFlightSec: 37, heightMeters: 37),
       FiringTableRow(charge: 3, rangeMeters: 2200, elevationMils: 1210, timeOfFlightSec: 36, heightMeters: 36),
       FiringTableRow(charge: 3, rangeMeters: 2400, elevationMils: 1176, timeOfFlightSec: 35, heightMeters: 35),
       FiringTableRow(charge: 3, rangeMeters: 2600, elevationMils: 1142, timeOfFlightSec: 34, heightMeters: 34),
       FiringTableRow(charge: 3, rangeMeters: 2800, elevationMils: 1108, timeOfFlightSec: 33, heightMeters: 33),
       FiringTableRow(charge: 3, rangeMeters: 3000, elevationMils: 1020, timeOfFlightSec: 30, heightMeters: 30),
-      FiringTableRow(charge: 3, rangeMeters: 3200, elevationMeters: 932, timeOfFlightSec: 28, heightMeters: 28),
+      FiringTableRow(charge: 3, rangeMeters: 3200, elevationMils: 932, timeOfFlightSec: 28, heightMeters: 28), // ✅ تم التصحيح هنا
       FiringTableRow(charge: 3, rangeMeters: 3400, elevationMils: 844, timeOfFlightSec: 26, heightMeters: 26),
       FiringTableRow(charge: 3, rangeMeters: 3500, elevationMils: 750, timeOfFlightSec: 25, heightMeters: 25),
-      // الحشوة 4 (حمراء 1 + بيضاء 4)
       FiringTableRow(charge: 4, rangeMeters: 2500, elevationMils: 1183, timeOfFlightSec: 40, heightMeters: 40),
       FiringTableRow(charge: 4, rangeMeters: 2700, elevationMils: 1149, timeOfFlightSec: 39, heightMeters: 39),
       FiringTableRow(charge: 4, rangeMeters: 2900, elevationMils: 1115, timeOfFlightSec: 38, heightMeters: 38),
@@ -642,7 +610,6 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 3700, elevationMils: 929, timeOfFlightSec: 31, heightMeters: 31),
       FiringTableRow(charge: 4, rangeMeters: 3900, elevationMils: 841, timeOfFlightSec: 29, heightMeters: 29),
       FiringTableRow(charge: 4, rangeMeters: 4100, elevationMils: 750, timeOfFlightSec: 27, heightMeters: 27),
-      // الحشوة 5 (حمراء 1 + بيضاء 5)
       FiringTableRow(charge: 5, rangeMeters: 3500, elevationMils: 1100, timeOfFlightSec: 42, heightMeters: 42),
       FiringTableRow(charge: 5, rangeMeters: 3700, elevationMils: 1066, timeOfFlightSec: 41, heightMeters: 41),
       FiringTableRow(charge: 5, rangeMeters: 3900, elevationMils: 1032, timeOfFlightSec: 40, heightMeters: 40),
@@ -651,16 +618,14 @@ class FiringTables {
       FiringTableRow(charge: 5, rangeMeters: 4500, elevationMils: 917, timeOfFlightSec: 37, heightMeters: 37),
       FiringTableRow(charge: 5, rangeMeters: 4650, elevationMils: 831, timeOfFlightSec: 36, heightMeters: 36),
       FiringTableRow(charge: 5, rangeMeters: 4750, elevationMils: 750, timeOfFlightSec: 35, heightMeters: 35),
-      // الحشوة 6 (حمراء 1 + بيضاء 6)
       FiringTableRow(charge: 6, rangeMeters: 4000, elevationMils: 1100, timeOfFlightSec: 45, heightMeters: 45),
       FiringTableRow(charge: 6, rangeMeters: 4200, elevationMils: 1066, timeOfFlightSec: 44, heightMeters: 44),
       FiringTableRow(charge: 6, rangeMeters: 4400, elevationMils: 1032, timeOfFlightSec: 43, heightMeters: 43),
       FiringTableRow(charge: 6, rangeMeters: 4600, elevationMils: 998, timeOfFlightSec: 42, heightMeters: 42),
       FiringTableRow(charge: 6, rangeMeters: 4800, elevationMils: 964, timeOfFlightSec: 41, heightMeters: 41),
       FiringTableRow(charge: 6, rangeMeters: 5000, elevationMils: 917, timeOfFlightSec: 40, heightMeters: 40),
-      FiringTableRow(charge: 6, rangeMeters: 5200, elevationMeters: 831, timeOfFlightSec: 38, heightMeters: 38),
+      FiringTableRow(charge: 6, rangeMeters: 5200, elevationMils: 831, timeOfFlightSec: 38, heightMeters: 38), // ✅ تم التصحيح هنا
       FiringTableRow(charge: 6, rangeMeters: 5450, elevationMils: 750, timeOfFlightSec: 37, heightMeters: 37),
-      // الحشوة 7 (حمراء 1 + بيضاء 7)
       FiringTableRow(charge: 7, rangeMeters: 4500, elevationMils: 1100, timeOfFlightSec: 48, heightMeters: 48),
       FiringTableRow(charge: 7, rangeMeters: 4700, elevationMils: 1066, timeOfFlightSec: 47, heightMeters: 47),
       FiringTableRow(charge: 7, rangeMeters: 4900, elevationMils: 1032, timeOfFlightSec: 46, heightMeters: 46),
@@ -669,7 +634,6 @@ class FiringTables {
       FiringTableRow(charge: 7, rangeMeters: 5500, elevationMils: 917, timeOfFlightSec: 43, heightMeters: 43),
       FiringTableRow(charge: 7, rangeMeters: 5750, elevationMils: 831, timeOfFlightSec: 41, heightMeters: 41),
       FiringTableRow(charge: 7, rangeMeters: 6000, elevationMils: 750, timeOfFlightSec: 40, heightMeters: 40),
-      // الحشوة 8 (حمراء 1 + بيضاء 8)
       FiringTableRow(charge: 8, rangeMeters: 5000, elevationMils: 1083, timeOfFlightSec: 50, heightMeters: 50),
       FiringTableRow(charge: 8, rangeMeters: 5200, elevationMils: 1049, timeOfFlightSec: 49, heightMeters: 49),
       FiringTableRow(charge: 8, rangeMeters: 5400, elevationMils: 1015, timeOfFlightSec: 48, heightMeters: 48),
@@ -681,7 +645,7 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 7. هاون 120 ملم إيراني - Illumination (تنوير)
+    // 7. هاون 120 ملم إيراني - Illumination
     // ============================================================
     'mortar120_illum_iran': const [
       FiringTableRow(charge: 1, rangeMeters: 900, elevationMils: 1215, timeOfFlightSec: 19),
@@ -725,17 +689,15 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 8. هاون 120 ملم صيني - HE (بالدرجات العشرية → ملات × 6400/360)
+    // 8. هاون 120 ملم صيني - HE
     // ============================================================
     'mortar120_he_china': const [
-      // الحشوة 0 (78.7° = 1400 مل, 45° = 800 مل)
       FiringTableRow(charge: 0, rangeMeters: 300, elevationMils: 1400, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 400, elevationMils: 1350, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 500, elevationMils: 1300, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 600, elevationMils: 1250, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 700, elevationMils: 1200, timeOfFlightSec: 0),
       FiringTableRow(charge: 0, rangeMeters: 800, elevationMils: 800, timeOfFlightSec: 0),
-      // الحشوة 1 (79° = 1404 مل)
       FiringTableRow(charge: 1, rangeMeters: 800, elevationMils: 1404, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1000, elevationMils: 1350, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1200, elevationMils: 1300, timeOfFlightSec: 0),
@@ -743,7 +705,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 1600, elevationMils: 1200, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 1800, elevationMils: 1150, timeOfFlightSec: 0),
       FiringTableRow(charge: 1, rangeMeters: 2000, elevationMils: 800, timeOfFlightSec: 0),
-      // الحشوة 2 (79.5° = 1413 مل)
       FiringTableRow(charge: 2, rangeMeters: 1500, elevationMils: 1413, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 1800, elevationMils: 1350, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 2100, elevationMils: 1300, timeOfFlightSec: 0),
@@ -752,7 +713,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 3000, elevationMils: 1150, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 3300, elevationMils: 1100, timeOfFlightSec: 0),
       FiringTableRow(charge: 2, rangeMeters: 3600, elevationMils: 800, timeOfFlightSec: 0),
-      // الحشوة 3 (79.7° = 1417 مل)
       FiringTableRow(charge: 3, rangeMeters: 2200, elevationMils: 1417, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 2500, elevationMils: 1350, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 2800, elevationMils: 1300, timeOfFlightSec: 0),
@@ -763,7 +723,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 4300, elevationMils: 1050, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 4600, elevationMils: 1000, timeOfFlightSec: 0),
       FiringTableRow(charge: 3, rangeMeters: 5000, elevationMils: 1045, timeOfFlightSec: 0),
-      // الحشوة 4 (79.7° = 1417 مل)
       FiringTableRow(charge: 4, rangeMeters: 2800, elevationMils: 1417, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 3200, elevationMils: 1350, timeOfFlightSec: 0),
       FiringTableRow(charge: 4, rangeMeters: 3600, elevationMils: 1300, timeOfFlightSec: 0),
@@ -779,10 +738,9 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 9. هاون 120 ملم M75 يوغسلافي/صربي - Illumination M87P1 (دائرة 6000 → 6400)
+    // 9. هاون 120 ملم M75 يوغسلافي/صربي - Illumination
     // ============================================================
     'mortar120_illum_serbia': const [
-      // الحشوة 2 (× 6400/6000 = 1.0667)
       FiringTableRow(charge: 2, rangeMeters: 500, elevationMils: 363, timeOfFlightSec: 30.8),
       FiringTableRow(charge: 2, rangeMeters: 700, elevationMils: 376, timeOfFlightSec: 30.6),
       FiringTableRow(charge: 2, rangeMeters: 900, elevationMils: 414, timeOfFlightSec: 30.4),
@@ -797,7 +755,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 2300, elevationMils: 763, timeOfFlightSec: 25.6),
       FiringTableRow(charge: 2, rangeMeters: 2400, elevationMils: 799, timeOfFlightSec: 24.5),
       FiringTableRow(charge: 2, rangeMeters: 2500, elevationMils: 939, timeOfFlightSec: 21.4),
-      // الحشوة 3
       FiringTableRow(charge: 3, rangeMeters: 1500, elevationMils: 469, timeOfFlightSec: 37.7),
       FiringTableRow(charge: 3, rangeMeters: 1700, elevationMils: 496, timeOfFlightSec: 37.4),
       FiringTableRow(charge: 3, rangeMeters: 1900, elevationMils: 528, timeOfFlightSec: 37.1),
@@ -817,7 +774,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 3600, elevationMils: 803, timeOfFlightSec: 31.0),
       FiringTableRow(charge: 3, rangeMeters: 3800, elevationMils: 843, timeOfFlightSec: 30.3),
       FiringTableRow(charge: 3, rangeMeters: 4000, elevationMils: 848, timeOfFlightSec: 30.3),
-      // الحشوة 4
       FiringTableRow(charge: 4, rangeMeters: 2000, elevationMils: 474, timeOfFlightSec: 43.9),
       FiringTableRow(charge: 4, rangeMeters: 2100, elevationMils: 485, timeOfFlightSec: 43.8),
       FiringTableRow(charge: 4, rangeMeters: 2200, elevationMils: 496, timeOfFlightSec: 43.7),
@@ -839,7 +795,6 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 4600, elevationMils: 779, timeOfFlightSec: 38.1),
       FiringTableRow(charge: 4, rangeMeters: 4800, elevationMils: 805, timeOfFlightSec: 37.8),
       FiringTableRow(charge: 4, rangeMeters: 5000, elevationMils: 880, timeOfFlightSec: 34.7),
-      // الحشوة 5
       FiringTableRow(charge: 5, rangeMeters: 3000, elevationMils: 532, timeOfFlightSec: 48.1),
       FiringTableRow(charge: 5, rangeMeters: 3200, elevationMils: 557, timeOfFlightSec: 47.9),
       FiringTableRow(charge: 5, rangeMeters: 3400, elevationMils: 581, timeOfFlightSec: 47.6),
@@ -863,10 +818,9 @@ class FiringTables {
     ],
 
     // ============================================================
-    // 10. M109/M198 155mm - HE M107 (حشوات 1-4 - النقاط الرئيسية)
+    // 10. M109/M198 155mm - HE M107
     // ============================================================
     'm109_he_usa': const [
-      // الحشوة 1L
       FiringTableRow(charge: 1, rangeMeters: 0, elevationMils: 19, timeOfFlightSec: 0.0),
       FiringTableRow(charge: 1, rangeMeters: 100, elevationMils: 25.9, timeOfFlightSec: 2.3),
       FiringTableRow(charge: 1, rangeMeters: 500, elevationMils: 12.6, timeOfFlightSec: 1.1),
@@ -890,7 +844,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 9500, elevationMils: 449.4, timeOfFlightSec: 32.4),
       FiringTableRow(charge: 1, rangeMeters: 10000, elevationMils: 492.0, timeOfFlightSec: 35.1),
       FiringTableRow(charge: 1, rangeMeters: 10500, elevationMils: 540.8, timeOfFlightSec: 38.0),
-      // الحشوة 1H (الفرع العالي)
       FiringTableRow(charge: 1, rangeMeters: 7900, elevationMils: 828.3, timeOfFlightSec: 43.3),
       FiringTableRow(charge: 1, rangeMeters: 7500, elevationMils: 959.1, timeOfFlightSec: 48.2),
       FiringTableRow(charge: 1, rangeMeters: 7000, elevationMils: 1041.9, timeOfFlightSec: 50.8),
@@ -900,7 +853,6 @@ class FiringTables {
       FiringTableRow(charge: 1, rangeMeters: 5000, elevationMils: 1239.3, timeOfFlightSec: 56.0),
       FiringTableRow(charge: 1, rangeMeters: 4500, elevationMils: 1273.5, timeOfFlightSec: 56.9),
       FiringTableRow(charge: 1, rangeMeters: 4042, elevationMils: 1300.0, timeOfFlightSec: 57.7),
-      // الحشوة 2L
       FiringTableRow(charge: 2, rangeMeters: 0, elevationMils: 40, timeOfFlightSec: 0.0),
       FiringTableRow(charge: 2, rangeMeters: 500, elevationMils: 12.6, timeOfFlightSec: 1.1),
       FiringTableRow(charge: 2, rangeMeters: 1000, elevationMils: 25.9, timeOfFlightSec: 2.3),
@@ -926,7 +878,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 11000, elevationMils: 599.9, timeOfFlightSec: 41.5),
       FiringTableRow(charge: 2, rangeMeters: 11500, elevationMils: 684.7, timeOfFlightSec: 46.3),
       FiringTableRow(charge: 2, rangeMeters: 11700, elevationMils: 836.1, timeOfFlightSec: 54.2),
-      // الحشوة 2H
       FiringTableRow(charge: 2, rangeMeters: 11600, elevationMils: 875.4, timeOfFlightSec: 56.1),
       FiringTableRow(charge: 2, rangeMeters: 11000, elevationMils: 982.5, timeOfFlightSec: 60.8),
       FiringTableRow(charge: 2, rangeMeters: 10500, elevationMils: 1037.7, timeOfFlightSec: 63.1),
@@ -939,7 +890,6 @@ class FiringTables {
       FiringTableRow(charge: 2, rangeMeters: 7000, elevationMils: 1260.6, timeOfFlightSec: 70.6),
       FiringTableRow(charge: 2, rangeMeters: 6500, elevationMils: 1280.9, timeOfFlightSec: 71.4),
       FiringTableRow(charge: 2, rangeMeters: 6101, elevationMils: 1295.0, timeOfFlightSec: 71.9),
-      // الحشوة 3L (جزئي)
       FiringTableRow(charge: 3, rangeMeters: 0, elevationMils: 69, timeOfFlightSec: 0.0),
       FiringTableRow(charge: 3, rangeMeters: 500, elevationMils: 7.5, timeOfFlightSec: 0.9),
       FiringTableRow(charge: 3, rangeMeters: 1000, elevationMils: 15.3, timeOfFlightSec: 1.8),
@@ -948,7 +898,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 2500, elevationMils: 42.0, timeOfFlightSec: 4.8),
       FiringTableRow(charge: 3, rangeMeters: 3000, elevationMils: 52.2, timeOfFlightSec: 5.9),
       FiringTableRow(charge: 3, rangeMeters: 3500, elevationMils: 63.0, timeOfFlightSec: 7.0),
-      // الحشوة 3H
       FiringTableRow(charge: 3, rangeMeters: 8497, elevationMils: 1275.0, timeOfFlightSec: 0.0),
       FiringTableRow(charge: 3, rangeMeters: 9000, elevationMils: 1261.1, timeOfFlightSec: 83.2),
       FiringTableRow(charge: 3, rangeMeters: 9500, elevationMils: 1245.5, timeOfFlightSec: 82.5),
@@ -964,7 +913,6 @@ class FiringTables {
       FiringTableRow(charge: 3, rangeMeters: 14500, elevationMils: 961.4, timeOfFlightSec: 70.0),
       FiringTableRow(charge: 3, rangeMeters: 15000, elevationMils: 882.3, timeOfFlightSec: 65.8),
       FiringTableRow(charge: 3, rangeMeters: 15100, elevationMils: 852.2, timeOfFlightSec: 64.1),
-      // الحشوة 4L
       FiringTableRow(charge: 4, rangeMeters: 0, elevationMils: 100, timeOfFlightSec: 0.0),
       FiringTableRow(charge: 4, rangeMeters: 500, elevationMils: 5.1, timeOfFlightSec: 0.7),
       FiringTableRow(charge: 4, rangeMeters: 1000, elevationMils: 10.5, timeOfFlightSec: 1.5),
@@ -987,7 +935,6 @@ class FiringTables {
       FiringTableRow(charge: 4, rangeMeters: 9500, elevationMils: 177.9, timeOfFlightSec: 21.2),
       FiringTableRow(charge: 4, rangeMeters: 10000, elevationMils: 195.2, timeOfFlightSec: 22.9),
       FiringTableRow(charge: 4, rangeMeters: 10500, elevationMils: 213.5, timeOfFlightSec: 24.6),
-      // الحشوة 4H
       FiringTableRow(charge: 4, rangeMeters: 7000, elevationMils: 166.2, timeOfFlightSec: 17.1),
       FiringTableRow(charge: 4, rangeMeters: 7500, elevationMils: 185.7, timeOfFlightSec: 18.8),
       FiringTableRow(charge: 4, rangeMeters: 8000, elevationMils: 206.5, timeOfFlightSec: 20.5),
