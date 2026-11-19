@@ -9,11 +9,20 @@ import 'package:intl/intl.dart';
 import '../../../theme/theme_provider.dart';
 import '../../../theme/settings_provider.dart';
 import '../../../services/data_service.dart';
+import 'voice_command_screen.dart';
+import 'smart_ammo_log_screen.dart';
+import 'self_correction_screen.dart';
+import 'mrsi_pro_screen.dart';
+import 'ballistic_simulator_screen.dart';
+import 'battery_management_screen.dart';
+import 'terrain_analyzer_screen.dart';
+import 'smoke_calculator_screen.dart';
+import 'rocket_warning_screen.dart';
+import 'advanced_encryption_screen.dart';
 
 class AdvancedToolsScreen extends StatefulWidget {
   final int initialIndex;
-  const AdvancedToolsScreen({Key? key, this.initialIndex = 0})
-      : super(key: key);
+  const AdvancedToolsScreen({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
   State<AdvancedToolsScreen> createState() => _AdvancedToolsScreenState();
@@ -26,8 +35,7 @@ class _AdvancedToolsScreenState extends State<AdvancedToolsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: 9, vsync: this, initialIndex: widget.initialIndex);
+    _tabController = TabController(length: 19, vsync: this, initialIndex: widget.initialIndex);
   }
 
   @override
@@ -63,6 +71,16 @@ class _AdvancedToolsScreenState extends State<AdvancedToolsScreen>
             Tab(text: 'وقت التهدئة'),
             Tab(text: 'سجل الطقس'),
             Tab(text: 'توزيع النيران'),
+            Tab(text: 'أوامر صوتية'),
+            Tab(text: 'سجل الاستهلاك'),
+            Tab(text: 'التصحيح AI'),
+            Tab(text: 'MRSI Pro'),
+            Tab(text: 'محاكي 3D'),
+            Tab(text: 'إدارة البطارية'),
+            Tab(text: 'كاشف التضاريس'),
+            Tab(text: 'حاسبة الدخان'),
+            Tab(text: 'إنذار الصواريخ'),
+            Tab(text: 'التشفير المتقدم'),
           ],
         ),
       ),
@@ -78,24 +96,29 @@ class _AdvancedToolsScreenState extends State<AdvancedToolsScreen>
           CoolDownTab(),
           WeatherLogTab(),
           FireDistributionTab(),
+          VoiceCommandScreen(),
+          SmartAmmoLogScreen(),
+          SelfCorrectionScreen(),
+          MrsiProScreen(),
+          BallisticSimulatorScreen(),
+          BatteryManagementScreen(),
+          TerrainAnalyzerScreen(),
+          SmokeCalculatorScreen(),
+          RocketWarningScreen(),
+          AdvancedEncryptionScreen(),
         ],
       ),
     );
   }
 }
 
-// ============= مكونات مساعدة =============
+// ============= المكونات المساعدة =============
 Widget _buildMgrsRow(
-    TextEditingController z,
-    TextEditingController b,
-    TextEditingController sq,
-    TextEditingController e,
-    TextEditingController n,
-    Map<String, Color> colors) {
+    TextEditingController z, TextEditingController b, TextEditingController sq,
+    TextEditingController e, TextEditingController n, Map<String, Color> colors) {
   InputDecoration deco(String hint) => InputDecoration(
         hintText: hint,
-        hintStyle:
-            TextStyle(color: colors['text']?.withOpacity(0.4), fontSize: 12),
+        hintStyle: TextStyle(color: colors['text']?.withOpacity(0.4), fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 4),
         isDense: true,
         enabledBorder: OutlineInputBorder(
@@ -103,38 +126,28 @@ Widget _buildMgrsRow(
             borderSide: BorderSide(color: colors['border']!)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide:
-                BorderSide(color: colors['primary']!, width: 2)),
+            borderSide: BorderSide(color: colors['primary']!, width: 2)),
       );
-  Widget field(TextEditingController c, String hint,
-      {int flex = 1, bool isNum = true}) {
+  Widget field(TextEditingController c, String hint, {int flex = 1, bool isNum = true}) {
     return Expanded(
         flex: flex,
         child: TextField(
             controller: c,
             keyboardType: isNum ? TextInputType.number : TextInputType.text,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: colors['text'],
-                fontWeight: FontWeight.bold,
-                fontSize: 16),
+            style: TextStyle(color: colors['text'], fontWeight: FontWeight.bold, fontSize: 16),
             decoration: deco(hint)));
   }
   return Row(children: [
-    field(z, 'Zone', flex: 2),
-    const SizedBox(width: 6),
-    field(b, 'Band', flex: 2, isNum: false),
-    const SizedBox(width: 6),
-    field(sq, 'Sq', flex: 2, isNum: false),
-    const SizedBox(width: 6),
-    field(e, 'Easting', flex: 3),
-    const SizedBox(width: 6),
+    field(z, 'Zone', flex: 2), const SizedBox(width: 6),
+    field(b, 'Band', flex: 2, isNum: false), const SizedBox(width: 6),
+    field(sq, 'Sq', flex: 2, isNum: false), const SizedBox(width: 6),
+    field(e, 'Easting', flex: 3), const SizedBox(width: 6),
     field(n, 'Northing', flex: 3),
   ]);
 }
 
-Widget _buildCalcButton(String text, VoidCallback onPressed,
-    Map<String, Color> colors) {
+Widget _buildCalcButton(String text, VoidCallback onPressed, Map<String, Color> colors) {
   return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -143,36 +156,21 @@ Widget _buildCalcButton(String text, VoidCallback onPressed,
             backgroundColor: colors['primary'],
             foregroundColor: Colors.black,
             padding: const EdgeInsets.symmetric(vertical: 16),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
-          child: Text(text,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16))));
+          child: Text(text, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16))));
 }
 
 Widget _buildResultRow(String label, String value, Map<String, Color> colors) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label,
-                style: TextStyle(
-                    color: colors['text']?.withOpacity(0.8), fontSize: 15)),
-            Text(value,
-                style: TextStyle(
-                    color: colors['primary'],
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold)),
-          ]));
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(label, style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 15)),
+        Text(value, style: TextStyle(color: colors['primary'], fontSize: 18, fontWeight: FontWeight.bold)),
+      ]));
 }
 
-Widget _buildField(String label, TextEditingController ctrl,
-    Map<String, Color> colors,
-    {bool isNum = true}) {
+Widget _buildField(String label, TextEditingController ctrl, Map<String, Color> colors, {bool isNum = true}) {
   return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: TextField(
@@ -181,13 +179,11 @@ Widget _buildField(String label, TextEditingController ctrl,
           style: TextStyle(color: colors['text'], fontSize: 15),
           decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(
-                  color: colors['text']?.withOpacity(0.7), fontSize: 14),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 14, vertical: 14))));
+              labelStyle: TextStyle(color: colors['text']?.withOpacity(0.7), fontSize: 14),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14))));
 }
 
-// ============= 1. الهدف المتحرك (مصحح: وحدة الزاوية من الإعدادات) =============
+// ============= 1. الهدف المتحرك =============
 class MovingTargetTab extends StatefulWidget {
   const MovingTargetTab({Key? key}) : super(key: key);
   @override
@@ -232,9 +228,7 @@ class _MovingTargetTabState extends State<MovingTargetTab> {
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
     return ListView(padding: const EdgeInsets.all(16), children: [
-      Text('الهدف الحالي (MGRS):',
-          style: TextStyle(
-              color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+      Text('الهدف الحالي (MGRS):', style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
       const SizedBox(height: 10),
       _buildMgrsRow(zCtrl, bCtrl, sqCtrl, eCtrl, nCtrl, colors),
       const SizedBox(height: 16),
@@ -244,9 +238,7 @@ class _MovingTargetTabState extends State<MovingTargetTab> {
       const SizedBox(height: 12),
       _buildCalcButton('حساب نقطة الاعتراض', _calculateLead, colors),
       const SizedBox(height: 24),
-      Text('النتائج:',
-          style: TextStyle(
-              color: colors['warning'], fontSize: 16, fontWeight: FontWeight.bold)),
+      Text('النتائج:', style: TextStyle(color: colors['warning'], fontSize: 16, fontWeight: FontWeight.bold)),
       const SizedBox(height: 8),
       _buildResultRow('مسافة التقدم', leadDist, colors),
       _buildResultRow('الهدف الجديد E', newE, colors),
@@ -255,7 +247,7 @@ class _MovingTargetTabState extends State<MovingTargetTab> {
   }
 }
 
-// ============= 2. إزاحة الهدف (★ مصحح جذرياً: يعتمد سمت الرمي) =============
+// ============= 2. إزاحة الهدف =============
 class ShiftTargetTab extends StatefulWidget {
   const ShiftTargetTab({Key? key}) : super(key: key);
   @override
@@ -268,9 +260,9 @@ class _ShiftTargetTabState extends State<ShiftTargetTab> {
   final sqCtrl = TextEditingController(text: "MB");
   final eCtrl = TextEditingController();
   final nCtrl = TextEditingController();
-  final lrCtrl = TextEditingController(text: "0"); // يمين/يسار
-  final adCtrl = TextEditingController(text: "0"); // زيادة/نقصان
-  final azCtrl = TextEditingController(); // سمت الرمي
+  final lrCtrl = TextEditingController(text: "0");
+  final adCtrl = TextEditingController(text: "0");
+  final azCtrl = TextEditingController();
   String newE = "---";
   String newN = "---";
 
@@ -279,19 +271,14 @@ class _ShiftTargetTabState extends State<ShiftTargetTab> {
     final unit = sp.directionUnit;
     final e = double.tryParse(eCtrl.text) ?? 0;
     final n = double.tryParse(nCtrl.text) ?? 0;
-    final right = double.tryParse(lrCtrl.text) ?? 0; // + = يمين
-    final range = double.tryParse(adCtrl.text) ?? 0; // + = زيادة مدى
+    final right = double.tryParse(lrCtrl.text) ?? 0;
+    final range = double.tryParse(adCtrl.text) ?? 0;
     final azMils = double.tryParse(azCtrl.text);
     if (azMils == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('أدخل سمت الرمي أولاً (بدونه الإزاحة خاطئة)'),
-          backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('أدخل سمت الرمي أولاً'), backgroundColor: Colors.red));
       return;
     }
     final azRad = (azMils * 2 * pi) / unit;
-    // يمين = عمودي على خط الرمي باتجاه يمين المدفع
-    // dE = right*cos(az) + range*sin(az)
-    // dN = -right*sin(az) + range*cos(az)
     final dE = right * cos(azRad) + range * sin(azRad);
     final dN = -right * sin(azRad) + range * cos(azRad);
     setState(() {
@@ -304,9 +291,7 @@ class _ShiftTargetTabState extends State<ShiftTargetTab> {
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
     return ListView(padding: const EdgeInsets.all(16), children: [
-      Text('الهدف الأصلي (MGRS):',
-          style: TextStyle(
-              color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+      Text('الهدف الأصلي (MGRS):', style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
       const SizedBox(height: 10),
       _buildMgrsRow(zCtrl, bCtrl, sqCtrl, eCtrl, nCtrl, colors),
       const SizedBox(height: 16),
@@ -322,7 +307,7 @@ class _ShiftTargetTabState extends State<ShiftTargetTab> {
   }
 }
 
-// ============= 3. الذخيرة المطلوبة (★ مصحح: معرّفات صحيحة + تغطية واقعية) =============
+// ============= 3. الذخيرة المطلوبة =============
 class RoundsRequiredTab extends StatefulWidget {
   const RoundsRequiredTab({Key? key}) : super(key: key);
   @override
@@ -335,20 +320,10 @@ class _RoundsRequiredTabState extends State<RoundsRequiredTab> {
   String selectedWeaponId = "mortar120";
   String rounds = "---";
 
-  // تغطية القذيفة الواحدة بالمتر المربع لكل سلاح (تقريبية، تُعاير ميدانياً)
   static const Map<String, double> _coverage = {
-    'mortar60': 50,
-    'mortar81': 80,
-    'mortar82': 80,
-    'mortar120': 250,
-    'mortar120s': 250,
-    'd30': 200,
-    '2s1': 200,
-    'type59': 300,
-    'm109a6': 400,
-    'm198': 400,
-    'grad': 1200,
-    'tos1a': 800,
+    'mortar60': 50, 'mortar81': 80, 'mortar82': 80, 'mortar120': 250,
+    'mortar120s': 250, 'd30': 200, '2s1': 200, 'type59': 300,
+    'm109a6': 400, 'm198': 400, 'grad': 1200, 'tos1a': 800,
   };
 
   void _calculateRounds() {
@@ -367,24 +342,15 @@ class _RoundsRequiredTabState extends State<RoundsRequiredTab> {
     return ListView(padding: const EdgeInsets.all(16), children: [
       Container(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                   isExpanded: true,
                   dropdownColor: colors['surface'],
                   value: selectedWeaponId,
                   style: TextStyle(color: colors['text'], fontSize: 15),
-                  items: DataService.allWeapons
-                      .map((w) => DropdownMenuItem(
-                          value: w.id,
-                          child: Text(w.nameAr,
-                              style: TextStyle(color: colors['text']))))
-                      .toList(),
-                  onChanged: (v) {
-                    if (v != null) setState(() => selectedWeaponId = v);
-                  }))),
+                  items: DataService.allWeapons.map((w) => DropdownMenuItem(value: w.id, child: Text(w.nameAr, style: TextStyle(color: colors['text'])))).toList(),
+                  onChanged: (v) { if (v != null) setState(() => selectedWeaponId = v); }))),
       const SizedBox(height: 16),
       _buildField('عرض الهدف (متر)', widthCtrl, colors),
       _buildField('طول الهدف (متر)', lengthCtrl, colors),
@@ -393,19 +359,11 @@ class _RoundsRequiredTabState extends State<RoundsRequiredTab> {
       const SizedBox(height: 24),
       Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12)),
           child: Column(children: [
-            Text('العدد المطلوب',
-                style: TextStyle(
-                    color: colors['text']?.withOpacity(0.8), fontSize: 16)),
+            Text('العدد المطلوب', style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 16)),
             const SizedBox(height: 8),
-            Text(rounds,
-                style: TextStyle(
-                    color: colors['warning'],
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold)),
+            Text(rounds, style: TextStyle(color: colors['warning'], fontSize: 24, fontWeight: FontWeight.bold)),
           ])),
     ]);
   }
@@ -429,19 +387,13 @@ class _CommandParserTabState extends State<CommandParserTab> {
   String northing = "---";
 
   void _parseCommand() {
-    final text = textCtrl.text.toUpperCase().replaceAll('ي', 'Y');
-    // MGRS كامل: 38SMB1287718806
-    final fullMgrs =
-        RegExp(r'\b([0-6][0-9])\s*([C-X])\s*([A-Z]{2})\s*(\d{10})\b')
-            .firstMatch(text.replaceAll(' ', ''));
+    final text = textCtrl.text.toUpperCase();
+    final fullMgrs = RegExp(r'\b([0-6][0-9])\s*([C-X])\s*([A-Z]{2})\s*(\d{10})\b').firstMatch(text.replaceAll(' ', ''));
     final tenDigits = RegExp(r'\b(\d{10})\b').firstMatch(text);
     final fiveDigits = RegExp(r'\b(\d{5})\b').allMatches(text).toList();
     final zoneMatch = RegExp(r'\b(3[0-9])\b').firstMatch(text);
-    final bandMatch =
-        RegExp(r'\b(3[0-9])\s*([A-Z])\s*([A-Z]{2})').firstMatch(text);
-    final azMatch = RegExp(
-            r'(?:اتجاه|AZ|AZIMUTH|DIR|DIRECTION)[^\d]*(\d{3,4})')
-        .firstMatch(text);
+    final bandMatch = RegExp(r'\b(3[0-9])\s*([A-Z])\s*([A-Z]{2})').firstMatch(text);
+    final azMatch = RegExp(r'(?:اتجاه|AZ|AZIMUTH|DIR|DIRECTION)[^\d]*(\d{3,4})').firstMatch(text);
 
     String? finalE;
     String? finalN;
@@ -481,26 +433,15 @@ class _CommandParserTabState extends State<CommandParserTab> {
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
     return ListView(padding: const EdgeInsets.all(16), children: [
-      Text('مثال: الهدف 1 إحداثيات 38SMB1287718806 اتجاه 1200',
-          style: TextStyle(
-              color: colors['warning'],
-              fontSize: 13,
-              fontWeight: FontWeight.bold)),
+      Text('مثال: الهدف 1 إحداثيات 38SMB1287718806 اتجاه 1200', style: TextStyle(color: colors['warning'], fontSize: 13, fontWeight: FontWeight.bold)),
       const SizedBox(height: 10),
-      TextField(
-          controller: textCtrl,
-          maxLines: 4,
-          style: TextStyle(color: colors['text'], fontSize: 15),
-          decoration:
-              const InputDecoration(labelText: 'الصق أمر القيادة هنا...')),
+      TextField(controller: textCtrl, maxLines: 4, style: TextStyle(color: colors['text'], fontSize: 15), decoration: const InputDecoration(labelText: 'الصق أمر القيادة هنا...')),
       const SizedBox(height: 16),
       _buildCalcButton('تحليل الأمر', _parseCommand, colors),
       const SizedBox(height: 24),
       Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12)),
           child: Column(children: [
             _buildResultRow('المنطقة/النطاق/المربع', '$zone$band$square', colors),
             const Divider(),
@@ -516,7 +457,7 @@ class _CommandParserTabState extends State<CommandParserTab> {
   }
 }
 
-// ============= 5. نقطة السقوط (★ مصحح: الرياح تنحرف عكس اتجاه هبوبها) =============
+// ============= 5. نقطة السقوط =============
 class SpotPointTab extends StatefulWidget {
   const SpotPointTab({Key? key}) : super(key: key);
   @override
@@ -543,9 +484,8 @@ class _SpotPointTabState extends State<SpotPointTab> {
     final wSpeed = double.tryParse(windSpeedCtrl.text) ?? 0;
     final wDir = double.tryParse(windDirCtrl.text) ?? 0;
     final tof = double.tryParse(tofCtrl.text) ?? 0;
-    final drift = wSpeed * tof * 0.5; // معامل تصحيح: الانحراف ليس كامل زمن الطيران
+    final drift = wSpeed * tof * 0.5;
     final wRad = (wDir * 2 * pi) / unit;
-    // الرياح تهب "من" الاتجاه المدخل، فالانحراف "نحو" الاتجاه المعاكس
     setState(() {
       impactE = (e - drift * sin(wRad)).toStringAsFixed(0);
       impactN = (n - drift * cos(wRad)).toStringAsFixed(0);
@@ -556,9 +496,7 @@ class _SpotPointTabState extends State<SpotPointTab> {
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
     return ListView(padding: const EdgeInsets.all(16), children: [
-      Text('إحداثيات الهدف (MGRS):',
-          style: TextStyle(
-              color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+      Text('إحداثيات الهدف (MGRS):', style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
       const SizedBox(height: 10),
       _buildMgrsRow(zCtrl, bCtrl, sqCtrl, eCtrl, nCtrl, colors),
       const SizedBox(height: 16),
@@ -592,8 +530,7 @@ class _AirburstTabState extends State<AirburstTab> {
     if (tof > 0 && hob > 0) {
       final descentVel = 180.0;
       final calcTime = tof - (hob / descentVel);
-      setState(() =>
-          fuzeTime = "${calcTime > 0 ? calcTime.toStringAsFixed(1) : '0.1'} ثانية");
+      setState(() => fuzeTime = "${calcTime > 0 ? calcTime.toStringAsFixed(1) : '0.1'} ثانية");
     }
   }
 
@@ -608,19 +545,11 @@ class _AirburstTabState extends State<AirburstTab> {
       const SizedBox(height: 24),
       Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12)),
           child: Column(children: [
-            Text('يجب ضبط الصمام على',
-                style: TextStyle(
-                    color: colors['text']?.withOpacity(0.8), fontSize: 16)),
+            Text('يجب ضبط الصمام على', style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 16)),
             const SizedBox(height: 8),
-            Text(fuzeTime,
-                style: TextStyle(
-                    color: colors['warning'],
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold)),
+            Text(fuzeTime, style: TextStyle(color: colors['warning'], fontSize: 28, fontWeight: FontWeight.bold)),
           ])),
     ]);
   }
@@ -642,36 +571,23 @@ class _CoolDownTabState extends State<CoolDownTab> {
   void _startCoolDown() {
     final rounds = int.tryParse(roundsCtrl.text) ?? 0;
     if (rounds <= 0) return;
-    setState(() {
-      _secondsLeft = rounds * 10;
-      _isRunning = true;
-    });
+    setState(() { _secondsLeft = rounds * 10; _isRunning = true; });
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       setState(() {
-        if (_secondsLeft > 0) {
-          _secondsLeft--;
-        } else {
-          _timer?.cancel();
-          _isRunning = false;
-        }
+        if (_secondsLeft > 0) { _secondsLeft--; }
+        else { _timer?.cancel(); _isRunning = false; }
       });
     });
   }
 
   void _stopCoolDown() {
     _timer?.cancel();
-    setState(() {
-      _isRunning = false;
-      _secondsLeft = 0;
-    });
+    setState(() { _isRunning = false; _secondsLeft = 0; });
   }
 
   @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
+  void dispose() { _timer?.cancel(); super.dispose(); }
 
   @override
   Widget build(BuildContext context) {
@@ -679,48 +595,25 @@ class _CoolDownTabState extends State<CoolDownTab> {
     return ListView(padding: const EdgeInsets.all(16), children: [
       _buildField('عدد الطلقات التي تم رميها', roundsCtrl, colors),
       const SizedBox(height: 12),
-      _buildCalcButton(
-          _isRunning ? 'جاري التهدئة...' : 'بدء وقت التهدئة',
-          _isRunning ? () {} : _startCoolDown,
-          colors),
+      _buildCalcButton(_isRunning ? 'جاري التهدئة...' : 'بدء وقت التهدئة', _isRunning ? () {} : _startCoolDown, colors),
       if (_isRunning) ...[
         const SizedBox(height: 10),
-        SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: _stopCoolDown,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: const Text('إيقاف',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16))))
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _stopCoolDown, style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14)), child: const Text('إيقاف', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16))))
       ],
       const SizedBox(height: 24),
       Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12)),
           child: Column(children: [
-            Text('الوقت المتبقي',
-                style: TextStyle(
-                    color: colors['text']?.withOpacity(0.8), fontSize: 16)),
+            Text('الوقت المتبقي', style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 16)),
             const SizedBox(height: 8),
-            Text('$_secondsLeft ثانية',
-                style: TextStyle(
-                    color: _secondsLeft > 0 ? colors['warning'] : colors['primary'],
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold)),
+            Text('$_secondsLeft ثانية', style: TextStyle(color: _secondsLeft > 0 ? colors['warning'] : colors['primary'], fontSize: 40, fontWeight: FontWeight.bold)),
           ])),
     ]);
   }
 }
 
-// ============= 8. سجل الطقس (★ مضاف: زر تطبيق مباشر على الحاسبة) =============
+// ============= 8. سجل الطقس =============
 class WeatherLogTab extends StatefulWidget {
   const WeatherLogTab({Key? key}) : super(key: key);
   @override
@@ -735,10 +628,7 @@ class _WeatherLogTabState extends State<WeatherLogTab> {
   List<Map<String, dynamic>> _logs = [];
 
   @override
-  void initState() {
-    super.initState();
-    _loadLogs();
-  }
+  void initState() { super.initState(); _loadLogs(); }
 
   Future<void> _loadLogs() async {
     final prefs = await SharedPreferences.getInstance();
@@ -750,74 +640,28 @@ class _WeatherLogTabState extends State<WeatherLogTab> {
     if (tempCtrl.text.isEmpty) return;
     final newLog = {
       'date': DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()),
-      'temp': tempCtrl.text,
-      'press': pressCtrl.text,
-      'wind': windCtrl.text,
-      'dir': dirCtrl.text,
+      'temp': tempCtrl.text, 'press': pressCtrl.text, 'wind': windCtrl.text, 'dir': dirCtrl.text,
     };
     setState(() => _logs.insert(0, newLog));
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('weather_logs', json.encode(_logs));
-    tempCtrl.clear();
-    pressCtrl.clear();
-    windCtrl.clear();
-    dirCtrl.clear();
-  }
-
-  Future<void> _applyToCalc(Map<String, dynamic> log) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('active_weather', json.encode(log));
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('تم حفظ الطقس النشط — افتح الحاسبة واضغط "الطقس التلقائي" ثم استخدم المحفوظ'),
-        backgroundColor: Colors.green));
+    tempCtrl.clear(); pressCtrl.clear(); windCtrl.clear(); dirCtrl.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
     return Column(children: [
-      Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(children: [
-            Row(children: [
-              Expanded(child: _buildField('الحرارة (C)', tempCtrl, colors)),
-              const SizedBox(width: 10),
-              Expanded(child: _buildField('الضغط (hPa)', pressCtrl, colors)),
-            ]),
-            Row(children: [
-              Expanded(child: _buildField('الرياح (م/ث)', windCtrl, colors)),
-              const SizedBox(width: 10),
-              Expanded(child: _buildField('الاتجاه (ملة)', dirCtrl, colors)),
-            ]),
-            _buildCalcButton('حفظ في السجل', _addLog, colors),
-          ])),
+      Padding(padding: const EdgeInsets.all(16), child: Column(children: [
+        Row(children: [Expanded(child: _buildField('الحرارة (C)', tempCtrl, colors)), const SizedBox(width: 10), Expanded(child: _buildField('الضغط (hPa)', pressCtrl, colors))]),
+        Row(children: [Expanded(child: _buildField('الرياح (م/ث)', windCtrl, colors)), const SizedBox(width: 10), Expanded(child: _buildField('الاتجاه (ملة)', dirCtrl, colors))]),
+        _buildCalcButton('حفظ في السجل', _addLog, colors),
+      ])),
       const Divider(),
-      Expanded(
-          child: _logs.isEmpty
-              ? Center(
-                  child: Text('لا توجد سجلات',
-                      style: TextStyle(color: colors['text']?.withOpacity(0.6))))
-              : ListView.builder(
-                  itemCount: _logs.length,
-                  itemBuilder: (c, i) {
-                    final log = _logs[i];
-                    return ListTile(
-                        leading: Icon(Icons.cloud, color: colors['primary']),
-                        title: Text(log['date'],
-                            style: TextStyle(
-                                color: colors['text'],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14)),
-                        subtitle: Text(
-                            'حرارة: ${log['temp']}C | ضغط: ${log['press']} | رياح: ${log['wind']} @ ${log['dir']}',
-                            style: TextStyle(
-                                color: colors['text']?.withOpacity(0.7),
-                                fontSize: 12)),
-                        trailing: TextButton(
-                            onPressed: () => _applyToCalc(log),
-                            child: const Text('تطبيق')));
-                  })),
+      Expanded(child: _logs.isEmpty ? Center(child: Text('لا توجد سجلات', style: TextStyle(color: colors['text']?.withOpacity(0.6)))) : ListView.builder(itemCount: _logs.length, itemBuilder: (c, i) {
+        final log = _logs[i];
+        return ListTile(leading: Icon(Icons.cloud, color: colors['primary']), title: Text(log['date'], style: TextStyle(color: colors['text'], fontWeight: FontWeight.bold, fontSize: 14)), subtitle: Text('حرارة: ${log['temp']}C | ضغط: ${log['press']} | رياح: ${log['wind']} @ ${log['dir']}', style: TextStyle(color: colors['text']?.withOpacity(0.7), fontSize: 12)));
+      })),
     ]);
   }
 }
@@ -857,14 +701,7 @@ class _FireDistributionTabState extends State<FireDistributionTab> {
       const SizedBox(height: 12),
       _buildCalcButton('توزيع النيران بالتساوي', _distributeFire, colors),
       const SizedBox(height: 24),
-      Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: colors['surface'],
-              borderRadius: BorderRadius.circular(12)),
-          child: Text(distribution,
-              style: TextStyle(
-                  color: colors['text'], fontSize: 16, height: 1.6))),
+      Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12)), child: Text(distribution, style: TextStyle(color: colors['text'], fontSize: 16, height: 1.6))),
     ]);
   }
 }
