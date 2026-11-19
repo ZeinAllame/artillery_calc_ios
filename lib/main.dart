@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 import 'theme/theme_provider.dart';
 import 'theme/settings_provider.dart';
@@ -69,7 +71,8 @@ class _WebAuthGateState extends State<WebAuthGate> {
   bool _isAuthenticated = false;
   bool _isLoading = true;
   final TextEditingController _passController = TextEditingController();
-  final String _correctPassword = "فن المدفعية ٢٩";
+  static const String _correctPasswordHash =
+      '43c25e9a5f25574942835114c7915ee914511188d573ec0e9ccd6422d5c03115';
 
   @override
   void initState() {
@@ -94,7 +97,11 @@ class _WebAuthGateState extends State<WebAuthGate> {
   }
 
   Future<void> _verifyPassword() async {
-    if (_passController.text.trim() == _correctPassword) {
+    final enteredHash = sha256
+        .convert(utf8.encode(_passController.text.trim()))
+        .toString();
+
+    if (enteredHash == _correctPasswordHash) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('web_authenticated', true);
       if (!mounted) return;
