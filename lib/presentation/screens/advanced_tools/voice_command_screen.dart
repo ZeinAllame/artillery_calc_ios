@@ -17,13 +17,14 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
   double _pitch = 1.0;
   double _volume = 1.0;
   
-  // بيانات الأمر (تُملأ تلقائياً من آخر رمية)
   String _gunName = "مدفع واحد";
   String _charge = "---";
   String _azimuth = "---";
   String _elevation = "---";
   String _target = "---";
   String _shellType = "مهداد";
+  String _distance = "---";
+  String _tof = "---";
 
   @override
   void initState() {
@@ -33,7 +34,7 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
   }
 
   Future<void> _initTts() async {
-    await _tts.setLanguage("ar-IQ"); // لهجة عراقية
+    await _tts.setLanguage("ar-IQ");
     await _tts.setSpeechRate(_speechRate);
     await _tts.setPitch(_pitch);
     await _tts.setVolume(_volume);
@@ -45,22 +46,24 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
 
   Future<void> _loadLastFireData() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _charge = prefs.getString('last_charge') ?? "---";
-      _azimuth = prefs.getString('last_azimuth') ?? "---";
-      _elevation = prefs.getString('last_elevation') ?? "---";
-      _target = prefs.getString('last_target_name') ?? "---";
-    });
+    if (mounted) {
+      setState(() {
+        _charge = prefs.getString('last_charge') ?? "---";
+        _azimuth = prefs.getString('last_azimuth') ?? "---";
+        _elevation = prefs.getString('last_elevation') ?? "---";
+        _distance = prefs.getString('last_distance') ?? "---";
+        _tof = prefs.getString('last_tof') ?? "---";
+        final shell = prefs.getString('last_shell_type') ?? 'he';
+        _shellType = shell == 'he' ? 'مهداد' : shell == 'smoke' ? 'دخان' : shell == 'illum' ? 'تنوير' : 'مهداد';
+        final tgt = prefs.getString('last_tgt_mgrs') ?? '';
+        _target = tgt.isNotEmpty ? tgt : '---';
+      });
+    }
   }
 
-  // تحويل الأرقام إلى نص عراقي عسكري
   String _numberToIraqiText(String number) {
     if (number == "---") return "غير محدد";
-    
-    // إزالة النقاط والكسور
     number = number.replaceAll('.', ' فاصلة ');
-    
-    // قراءة الأرقام بالعراقي
     final words = number.split(' ');
     final iraqiWords = words.map((word) {
       switch (word) {
@@ -78,29 +81,27 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
         default: return word;
       }
     }).toList();
-    
     return iraqiWords.join(' ');
   }
 
   Future<void> _speakCommand() async {
     if (_isSpeaking) {
       await _tts.stop();
-      setState(() => _isSpeaking = false);
+      if (mounted) setState(() => _isSpeaking = false);
       return;
     }
 
-    // بناء الأمر الصوتي باللهجة العراقية
     String command = "";
     command += "أمر رمي. ";
     command += "$_gunName. ";
-    command += "حشوة $_charge. ";
-    command += "اتجاه ${_numberToIraqiText(_azimuth)}. ";
-    command += "ارتفاع ${_numberToIraqiText(_elevation)}. ";
+    if (_charge != "---") command += "حشوة $_charge. ";
+    if (_azimuth != "---") command += "اتجاه ${_numberToIraqiText(_azimuth)}. ";
+    if (_elevation != "---") command += "ارتفاع ${_numberToIraqiText(_elevation)}. ";
     command += "عتاد $_shellType. ";
-    command += "هدف: $_target. ";
+    if (_target != "---") command += "هدف: $_target. ";
     command += "نار!";
 
-    setState(() => _isSpeaking = true);
+    if (mounted) setState(() => _isSpeaking = true);
     await _tts.speak(command);
   }
 
@@ -114,110 +115,95 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeProvider>(context).colors;
 
-    return Scaffold(
-      backgroundColor: colors['bg'],
-      appBar: AppBar(
-        title: const Text('الأوامر الصوتية'),
-        backgroundColor: colors['surface'],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // عرض الأمر الحالي
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: colors['surface'],
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: colors['primary']!),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('الأمر الحالي:', 
-                      style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
-                  _buildCommandRow('المدفع', _gunName, colors),
-                  _buildCommandRow('الحشوة', _charge, colors),
-                  _buildCommandRow('الاتجاه', _azimuth, colors),
-                  _buildCommandRow('الارتفاع', _elevation, colors),
-                  _buildCommandRow('العتاد', _shellType, colors),
-                  _buildCommandRow('الهدف', _target, colors),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            
-            // زر النطق
-            ElevatedButton.icon(
-              onPressed: _speakCommand,
-              icon: Icon(_isSpeaking ? Icons.stop : Icons.volume_up, size: 28),
-              label: Text(_isSpeaking ? 'إيقاف' : 'نطق الأمر', 
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _isSpeaking ? Colors.red : colors['primary'],
-                foregroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-            ),
-            const SizedBox(height: 24),
-            
-            // إعدادات الصوت
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: colors['surface'],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('إعدادات الصوت', 
-                      style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
-                  _buildSlider('سرعة الكلام', _speechRate, 0.3, 1.0, (val) {
-                    setState(() => _speechRate = val);
-                    _tts.setSpeechRate(val);
-                  }, colors),
-                  _buildSlider('حدة الصوت', _pitch, 0.5, 2.0, (val) {
-                    setState(() => _pitch = val);
-                    _tts.setPitch(val);
-                  }, colors),
-                  _buildSlider('مستوى الصوت', _volume, 0.0, 1.0, (val) {
-                    setState(() => _volume = val);
-                    _tts.setVolume(val);
-                  }, colors),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            
-            // ملاحظة
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: colors['warning']!.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: colors['warning']!),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, color: colors['warning']),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'يستخدم محرك النطق المدمج في أندرويد. للتأكد من جودة الصوت العراقي، تأكد من تثبيت حزمة اللغة العربية في إعدادات الهاتف.',
-                      style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 12),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: colors['surface'],
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: colors['primary']!),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('الأمر الحالي:', 
+                  style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              _buildCommandRow('المدفع', _gunName, colors),
+              _buildCommandRow('الحشوة', _charge, colors),
+              _buildCommandRow('الاتجاه', _azimuth, colors),
+              _buildCommandRow('الارتفاع', _elevation, colors),
+              _buildCommandRow('العتاد', _shellType, colors),
+              _buildCommandRow('المسافة', _distance, colors),
+              _buildCommandRow('زمن الطيران', _tof, colors),
+              _buildCommandRow('الهدف', _target, colors),
+            ],
+          ),
         ),
-      ),
+        const SizedBox(height: 20),
+        ElevatedButton.icon(
+          onPressed: _speakCommand,
+          icon: Icon(_isSpeaking ? Icons.stop : Icons.volume_up, size: 28),
+          label: Text(_isSpeaking ? 'إيقاف' : 'نطق الأمر', 
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _isSpeaking ? Colors.red : colors['primary'],
+            foregroundColor: Colors.black,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: colors['surface'],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('إعدادات الصوت', 
+                  style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              _buildSlider('سرعة الكلام', _speechRate, 0.3, 1.0, (val) {
+                setState(() => _speechRate = val);
+                _tts.setSpeechRate(val);
+              }, colors),
+              _buildSlider('حدة الصوت', _pitch, 0.5, 2.0, (val) {
+                setState(() => _pitch = val);
+                _tts.setPitch(val);
+              }, colors),
+              _buildSlider('مستوى الصوت', _volume, 0.0, 1.0, (val) {
+                setState(() => _volume = val);
+                _tts.setVolume(val);
+              }, colors),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: colors['warning']!.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: colors['warning']!),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.info_outline, color: colors['warning']),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '💡 ملاحظة: يجب إجراء عملية حساب في "حاسبة الرمي" أولاً حتى تظهر البيانات هنا. البيانات تُحدّث تلقائياً بعد كل عملية حساب.',
+                  style: TextStyle(color: colors['text']?.withOpacity(0.8), fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -228,7 +214,12 @@ class _VoiceCommandScreenState extends State<VoiceCommandScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: TextStyle(color: colors['text']?.withOpacity(0.7), fontSize: 14)),
-          Text(value, style: TextStyle(color: colors['text'], fontSize: 16, fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(value, 
+                style: TextStyle(color: colors['text'], fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.end,
+                overflow: TextOverflow.ellipsis),
+          ),
         ],
       ),
     );

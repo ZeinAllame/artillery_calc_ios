@@ -24,7 +24,7 @@ dependencies:
   mgrs_dart: ^2.0.0
   flutter_compass: ^0.8.0
   sensors_plus: ^6.1.1
-  image_picker: ^1.1.2
+  image_picker: ^1.0.2
   flutter_ringtone_player: ^4.0.0
   path_provider: ^2.1.4
   url_launcher: ^6.3.0

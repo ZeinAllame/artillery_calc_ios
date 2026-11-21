@@ -8,8 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 import '../../../theme/theme_provider.dart';
+import '../../../theme/settings_provider.dart';
 import '../../../models/models.dart';
-import '../../widgets/app_drawer.dart' show rootScaffoldKey; // ← الاستيراد المهم
+import '../../../domain/ballistics.dart';
+import '../../widgets/app_drawer.dart' show rootScaffoldKey;
 import 'target_log_screen.dart';
 
 class TargetCalculatorScreen extends StatefulWidget {
@@ -31,23 +33,44 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
   String resultE = "---";
   String resultN = "---";
   bool isLoadingGps = false;
+  
+  // التصحيح
+  double corrRight = 0;
+  double corrRange = 0;
+
   double calculatedDistance = 0;
   double calculatedAzimuth = 0;
 
   void _calculateTarget() {
+    final sp = Provider.of<SettingsProvider>(context, listen: false);
     final e = double.tryParse(obsE.text) ?? 0;
     final n = double.tryParse(obsN.text) ?? 0;
     final dist = double.tryParse(distCtrl.text) ?? 0;
     final az = double.tryParse(azCtrl.text) ?? 0;
-    if (dist == 0) return;
+    
+    if (dist == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('أدخل المسافة أولاً')));
+      return;
+    }
+    
+    // تحويل الاتجاه إلى راديان
     final azRad = (az * 2 * pi) / selectedUnit;
-    final dE = dist * sin(azRad);
-    final dN = dist * cos(azRad);
+    
+    // الحساب الأساسي
+    double finalE = e + (dist * sin(azRad));
+    double finalN = n + (dist * cos(azRad));
+    
+    // تطبيق التصحيح
+    if (corrRight != 0 || corrRange != 0) {
+      finalE += (corrRight * cos(azRad)) + (corrRange * sin(azRad));
+      finalN += (-corrRight * sin(azRad)) + (corrRange * cos(azRad));
+    }
+
     setState(() {
       calculatedDistance = dist;
       calculatedAzimuth = az;
-      resultE = (e + dE).toStringAsFixed(0);
-      resultN = (n + dN).toStringAsFixed(0);
+      resultE = finalE.toStringAsFixed(0);
+      resultN = finalN.toStringAsFixed(0);
     });
   }
 
@@ -64,6 +87,7 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
     final azRad = (az * 2 * pi) / selectedUnit;
     final dE = dist * sin(azRad);
     final dN = dist * cos(azRad);
+    
     setState(() {
       calculatedDistance = dist;
       calculatedAzimuth = az;
@@ -160,7 +184,6 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
     return Scaffold(
       backgroundColor: colors['bg'],
       appBar: AppBar(
-        // ← إصلاح الشريط الجانبي هنا
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu, color: colors['text']),
@@ -200,6 +223,32 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
           TextField(controller: distCtrl, decoration: const InputDecoration(labelText: 'المسافة (م)'), keyboardType: TextInputType.number),
           const SizedBox(height: 10),
           TextField(controller: azCtrl, decoration: InputDecoration(labelText: 'الاتجاه (${selectedUnit == 360 ? "°" : "مل"})'), keyboardType: TextInputType.number),
+          
+          // قسم التصحيح
+          const SizedBox(height: 24),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: colors['surface'], borderRadius: BorderRadius.circular(12), border: Border.all(color: colors['warning']!)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('تصحيح إحداثيات الهدف', style: TextStyle(color: colors['warning'], fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  _buildCorrBtn('◀ يسار', () => setState(() => corrRight -= 50), colors),
+                  _buildCorrDisplay('جانبي', corrRight, colors),
+                  _buildCorrBtn('يمين ▶', () => setState(() => corrRight += 50), colors),
+                ]),
+                const SizedBox(height: 12),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  _buildCorrBtn('▼ نقص', () => setState(() => corrRange -= 50), colors),
+                  _buildCorrDisplay('طولي', corrRange, colors),
+                  _buildCorrBtn('زيد ▲', () => setState(() => corrRange += 50), colors),
+                ]),
+              ],
+            ),
+          ),
+
           const SizedBox(height: 20),
           ElevatedButton(onPressed: _calculateTarget, style: ElevatedButton.styleFrom(backgroundColor: colors['primary'], foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 16)),
               child: const Text('حساب إحداثيات الهدف (Forward)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
@@ -220,6 +269,29 @@ class _TargetCalculatorScreenState extends State<TargetCalculatorScreen> {
           if (resultE != "---") ElevatedButton.icon(onPressed: _sendToCalculator, icon: const Icon(Icons.send), label: const Text('إرسال للحاسبة الرئيسية'), style: ElevatedButton.styleFrom(backgroundColor: colors['primary'], foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 14))),
         ],
       ),
+    );
+  }
+
+  Widget _buildCorrBtn(String text, VoidCallback onPressed, Map<String, Color> colors) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: colors['bg'],
+        foregroundColor: colors['text'],
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8), side: BorderSide(color: colors['border']!)),
+      ),
+      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildCorrDisplay(String label, double value, Map<String, Color> colors) {
+    return Column(
+      children: [
+        Text(label, style: TextStyle(color: colors['text']?.withOpacity(0.6), fontSize: 11)),
+        Text('${value >= 0 ? "+" : ""}${value.toStringAsFixed(0)}', 
+            style: TextStyle(color: colors['primary'], fontSize: 16, fontWeight: FontWeight.bold)),
+      ],
     );
   }
 }

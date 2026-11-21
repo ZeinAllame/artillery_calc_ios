@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../screens/friendly_forces/friendly_forces_screen.dart';
 import '../../theme/theme_provider.dart';
 import '../../theme/settings_provider.dart';
 import '../screens/calculator/table_manager_screen.dart';
@@ -10,6 +10,7 @@ import '../screens/manuals/manuals_screen.dart';
 import '../screens/advanced_tools/advanced_tools_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import '../screens/advanced_tools/acoustic_mesh_screen.dart';
+import '../screens/arc_center_screen.dart'; // ★ تمت الإضافة: استيراد شاشة مركز القوس
 
 /// مفتاح عام للوصول إلى Scaffold الرئيسي من أي شاشة متداخلة
 final GlobalKey<ScaffoldState> rootScaffoldKey = GlobalKey<ScaffoldState>();
@@ -140,8 +141,14 @@ class AppDrawer extends StatelessWidget {
                 item('إدارة جداول الرمي', Icons.table_chart,
                     () => _open(context, const TableManagerScreen()),
                     color: Colors.greenAccent),
+                
+                // ★ تمت الإضافة: عنصر قائمة مركز القوس ★
+                item('مركز القوس', Icons.architecture,
+                    () => _open(context, const ArcCenterScreen())),
+               item('القوات الصديقة / الخطر', Icons.groups,
+    () => _open(context, const FriendlyForcesScreen())),
                 item('المُراسِل المشفر', Icons.security,
-    () => _open(context, const AcousticMeshScreen())),
+                    () => _open(context, const AcousticMeshScreen())),
                 item('الكراسات والأدوات', Icons.menu_book,
                     () => _open(context, const ManualsScreen())),
                 const Padding(
@@ -156,7 +163,6 @@ class AppDrawer extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.bold)),
                 ),
-                // ★ التسعة كاملة الآن — 0 إلى 8 ★
                 tool('هدف متحرك', Icons.directions_run, 0),
                 tool('إزاحة الهدف', Icons.open_with, 1),
                 tool('الذخيرة المطلوبة', Icons.layers, 2),
@@ -166,16 +172,16 @@ class AppDrawer extends StatelessWidget {
                 tool('وقت التهدئة', Icons.ac_unit, 6),
                 tool('سجل الطقس', Icons.cloud, 7),
                 tool('توزيع النيران', Icons.grid_view, 8),
-				tool('أوامر صوتية', Icons.record_voice_over, 9),
-tool('سجل الاستهلاك', Icons.analytics, 10),
-tool('إنذار الصواريخ', Icons.warning, 17),
-tool('التشفير المتقدم', Icons.shield, 18),
-tool('كاشف التضاريس', Icons.terrain, 15),
-tool('حاسبة الدخان', Icons.smoke_free, 16),
-tool('محاكي الرمي 3D', Icons.flight, 13),
-tool('إدارة البطارية', Icons.group_work, 14),
-tool('التصحيح الذاتي AI', Icons.psychology, 11),
-tool('MRSI Pro', Icons.flash_on, 12),
+                tool('أوامر صوتية', Icons.record_voice_over, 9),
+                tool('سجل الاستهلاك', Icons.analytics, 10),
+                tool('التصحيح الذاتي AI', Icons.psychology, 11),
+                tool('MRSI Pro', Icons.flash_on, 12),
+                tool('محاكي الرمي 3D', Icons.flight, 13),
+                tool('إدارة البطارية', Icons.group_work, 14),
+                tool('كاشف التضاريس', Icons.terrain, 15),
+                tool('حاسبة الدخان', Icons.smoke_free, 16),
+                tool('إنذار الصواريخ', Icons.warning, 17),
+                tool('التشفير المتقدم', Icons.shield, 18),
                 const Divider(height: 1),
                 item('الإعدادات العامة', Icons.settings,
                     () => _open(context, const SettingsScreen())),
